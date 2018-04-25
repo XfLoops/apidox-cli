@@ -1,0 +1,38 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "An api document server which can notify all clients when local files changed.",
+  "main": "app.js",
+  "scripts": {
+    "api": "nodemon api/app.js --ext jade"
+  },
+  "author": "xiefangli",
+  "license": "MIT",
+  "dependencies": {
+    "aglio": "^2.3.0",
+    "chalk": "^2.4.0",
+    "chokidar": "^1.7.0",
+    "cors": "^2.8.4",
+    "dev-ip": "^1.0.1",
+    "express": "^4.16.1",
+    "nodemon": "^1.12.1",
+    "rimraf": "^2.6.2",
+    "socket.io": "^2.1.0"
+  },
+  "presets": [
+    "env"
+  ],
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "node_modules/*"
+    ],
+    "delay": "1000",
+    "watch": [
+      "app.js",
+      "app.config.js",
+      "utils/*.js",
+      "templates/*.*"
+    ]
+  }
+}
