@@ -3,15 +3,15 @@
 An api document server which enable auto-refresh all clients when local watched files changed, 
 to keep the api document always fresh to watchers.
 
+[Example Demo](dist/index.html)
 
 ## usage
 
-- `git clone`
+- `git clone https://github.com/XfLoops/api-blueprint-server.git`
 
 - `cd api-blueprint-server`
 
 - `npm i && npm run api`
-
 
 
 ## feature
