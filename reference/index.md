@@ -228,11 +228,6 @@ axio.post('/upload.do', formData, {headers: {'Content-Type': 'multiple/form-data
 
 - 常用接口命名方式：
     - 单数和复数: 如 `/cards/{cardId}`
-    - 增删改查：由于后端不能根据请求方法来区分同一地址的请求，所以要使用额外字段来区分。
-        - 增：如`[POST] /cards/{cardId}/add`
-        - 删：如`[DELETE] /cards/{cardId}/delete`
-        - 改：如`[PUT] /cards/{cardId}/edit`
-        - 查：如`[GET] /cards/{cardId}`
 
 :::     
 

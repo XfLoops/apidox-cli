@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "An api document server which can notify all clients when local files changed.",
+  "description": "In api blueprint writing, here's a server with blueprint & markdown reference, as well as clients auto-refresh.",
   "main": "app.js",
   "scripts": {
     "api": "nodemon api/app.js --ext jade"

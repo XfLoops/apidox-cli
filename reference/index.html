@@ -154,14 +154,6 @@ axio.post(<span class="hljs-string">'/upload.do'</span>, formData, {headers: {<s
 <p>常用接口命名方式：</p>
 <ul>
 <li>单数和复数: 如 <code>/cards/{cardId}</code></li>
-<li>增删改查：由于后端不能根据请求方法来区分同一地址的请求，所以要使用额外字段来区分。
-<ul>
-<li>增：如<code>[POST] /cards/{cardId}/add</code></li>
-<li>删：如<code>[DELETE] /cards/{cardId}/delete</code></li>
-<li>改：如<code>[PUT] /cards/{cardId}/edit</code></li>
-<li>查：如<code>[GET] /cards/{cardId}</code></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
