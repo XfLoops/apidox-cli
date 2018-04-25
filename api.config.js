@@ -37,7 +37,7 @@ const config = {
   },
 
   // client refresh seconds
-  waitUtilRefresh: 5,
+  waitUtilRefresh: 2,
 
   // socket
   socketOption: {
