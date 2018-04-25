@@ -3,7 +3,7 @@
 An api document server which enable auto-refresh all clients when local watched files changed, 
 to keep the api document always fresh to watchers.
 
-![Screenshot Demo](screenshot.gif)
+![Screenshot Demo](Screenshot.png)
 
 ## usage
 
