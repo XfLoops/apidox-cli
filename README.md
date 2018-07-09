@@ -25,6 +25,11 @@ to keep the api document always fresh to watchers.
 ## config
 
 ```javascript
+
+  // api文档所在目录 
+const APIB_DIR = './docs' 
+
+  // 解析路径
 const resolvePath = p => path.resolve(__dirname, p)
 
 const config = {
