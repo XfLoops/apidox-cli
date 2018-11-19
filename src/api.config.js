@@ -3,7 +3,7 @@ const resolvePath = p => path.resolve(__dirname, p)
 
 const host = require('dev-ip')()[0]
 const port = 4002
-const apiDir = './docs'
+const apiDir = './example'
 
 const config = {
   // basic config
