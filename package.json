@@ -1,23 +1,33 @@
 {
-  "name": "api",
+  "name": "apidox-cli",
   "version": "1.0.0",
-  "description": "In api blueprint writing, here's a server with blueprint & markdown reference, as well as clients auto-refresh.",
-  "main": "app.js",
-  "scripts": {
-    "api": "nodemon api/app.js --ext jade"
+  "description": "Command line interface for api documentation and mock.",
+  "bin": {
+    "apidox": "bin/apidox.js"
   },
   "author": "xiefangli",
   "license": "MIT",
+  "keywords": [
+    "api",
+    "blueprint",
+    "documentation",
+    "html",
+    "mock"
+  ],
   "dependencies": {
-    "aglio": "^2.3.0",
     "chalk": "^2.4.0",
     "chokidar": "^1.7.0",
+    "commander": "^2.16.0",
     "cors": "^2.8.4",
+    "debug": "^3.1.0",
     "dev-ip": "^1.0.1",
+    "drafter": "^2.0.0-pre.1",
     "express": "^4.16.1",
     "fontawesome": "^4.7.2",
+    "fs-extra": "^6.0.1",
     "nodemon": "^1.12.1",
-    "rimraf": "^2.6.2",
+    "pug": "^2.0.3",
+    "semver": "^5.6.0",
     "socket.io": "^2.1.0"
   },
   "presets": [
@@ -35,5 +45,8 @@
       "utils/*.js",
       "templates/*.*"
     ]
+  },
+  "engines": {
+    "node": ">=8.9"
   }
 }
