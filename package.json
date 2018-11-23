@@ -1,6 +1,6 @@
 {
   "name": "apidox-cli",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Command line interface for api documentation and mock.",
   "bin": {
     "apidox": "bin/apidox.js"
@@ -9,6 +9,7 @@
   "license": "MIT",
   "keywords": [
     "api",
+    "cli",
     "blueprint",
     "documentation",
     "html",

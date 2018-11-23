@@ -1,4 +1,3 @@
-
 #!/usr/bin/env node
 
 const chalk = require('chalk')
@@ -17,38 +16,24 @@ function checkNodeVersion (wanted, id) {
 
 checkNodeVersion(requiredVersion, 'apidox-cli')
 
-// const program = require('commander')
+const program = require('commander')
 
-// program
-//   .version(require('../package').version)
-//   .usage('<dir> [options]')
-//   .option('-p, --port', 'specify api document access port', parseInt, 4002)
-//   .option('-P, --mockPort', 'specify api mock server port', parseInt, 4000)
-//   .parse(process.argv)
+program
+  .version(require('../package').version, '-v, --version')
+  .usage('<dir> [-p <docPort>] [-P <mockPort>]')
+  .description('render and mock api files in one command')
+  .option('-p, --docPort', 'specify rendered html access port')
+  .option('-P, --mockPort', 'specify api mock server port')
+  .action((arg1, arg2, arg3, arg4) => {
+    console.log(arg1, arg2, arg3, arg4)
+  })
 
-// program
-//   .command('serve <dir> [options]')
-//   .option('-p, --port', 'specify api document access port', parseInt, 4002)
-//   .parse(process.argv)
+program.parse(process.argv)
 
-// let cmd, option 
-// program
-//   .command('mock <dir> [options]')
-//   .option('-P, --mockPort', 'specify api mock server port', parseInt, 4000)
-//   .action((cmd, option) => {
-//     cmd = cmd
-//     option = option
-//   })
-
-//   console.log('cmd:', cmd)
-//   console.log('option:', option)
+if (!process.argv.slice(2).length) {
+  program.outputHelp()
+}
 
 
-  var program = require('commander');
- 
-  program
-    .version('0.1.0')
-    .command('install [name]', 'install one or more packages')
-    .command('search [query]', 'search with optional query')
-    .command('list', 'list packages installed', {isDefault: true})
-    .parse(process.argv);
+
+
