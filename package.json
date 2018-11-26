@@ -26,7 +26,8 @@
     "express": "^4.16.1",
     "fontawesome": "^4.7.2",
     "fs-extra": "^6.0.1",
-    "nodemon": "^1.12.1",
+    "json5": "^2.1.0",
+    "klaw-sync": "^6.0.0",
     "pug": "^2.0.3",
     "semver": "^5.6.0",
     "socket.io": "^2.1.0"
@@ -34,19 +35,6 @@
   "presets": [
     "env"
   ],
-  "nodemonConfig": {
-    "ignore": [
-      "test/*",
-      "node_modules/*"
-    ],
-    "delay": "1000",
-    "watch": [
-      "app.js",
-      "app.config.js",
-      "utils/*.js",
-      "templates/*.*"
-    ]
-  },
   "engines": {
     "node": ">=8.9"
   }

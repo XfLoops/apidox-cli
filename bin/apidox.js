@@ -16,24 +16,46 @@ function checkNodeVersion (wanted, id) {
 
 checkNodeVersion(requiredVersion, 'apidox-cli')
 
+const bridge = {
+  host: require('dev-ip')()[0]
+}
 const program = require('commander')
 
 program
   .version(require('../package').version, '-v, --version')
-  .usage('<dir> [-p <docPort>] [-P <mockPort>]')
+  .usage('-f <folder> [-p <docPort> | -P <mockPort>]')
   .description('render and mock api files in one command')
-  .option('-p, --docPort', 'specify rendered html access port')
-  .option('-P, --mockPort', 'specify api mock server port')
-  .action((arg1, arg2, arg3, arg4) => {
-    console.log(arg1, arg2, arg3, arg4)
-  })
-
-program.parse(process.argv)
+  .option('-f, --folder <folder>', 'specify api files folder')
+  .option('-p, --docPort [docPort]', 'specify api document server port')
+  .option('-P, --mockPort [mockPort]', 'specify api mock server port')
+  .parse(process.argv)
 
 if (!process.argv.slice(2).length) {
-  program.outputHelp()
+  program.outputHelp() 
+  process.exit(1)
 }
 
+try {
+  if (!program.folder) {
+    console.log(chalk.red('Folder option is required. Usage: apidox -f <folder>'))
+    process.exit(1)
+  }
+  bridge.folder = require.resolve(program.folder)
+}
+catch (e) {
+  console.log(chalk.red(program.folder + ' is not exist.'))
+  process.exit(1)
+}
+
+if (program.docPort || !program.docPort && !program.mockPort) {
+  bridge.docPort = program.docPort || 4002
+  require('../servers/doc-server')(bridge)
+}
+
+if (program.mockPort) {
+  bridge.mockPort = program.mockPort
+  require('../servers/mock-server')(bridge)
+}
 
 
 

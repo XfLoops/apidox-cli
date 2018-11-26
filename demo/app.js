@@ -4,10 +4,10 @@ const cors = require('cors')
 const app = express()
 const server = require('http').Server(app, appConfig.socketOption)
 const io = require('socket.io')(server)
-const renderApibs = require('./utils/renderApibs')
-const renderReference = require('./utils/renderReference')
+const renderApibs = require('./renderApibs')
+const renderReference = require('./renderReference')
 const chalk = require('chalk')
-const {timestamp} = require('./utils/index')
+const {timestamp} = require('./index')
 const log = console.log
 const reference = appConfig.renderOption.locals.reference
 

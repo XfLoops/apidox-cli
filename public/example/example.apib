@@ -8,6 +8,17 @@
     + per_page: 20 (number, required) - 页数
 
 + Response 200 (application/json;charset=utf-8)
+  <!-- include(data/cards.json5) -->
+
+
+## 获取卡片列表 [GET /cards2.do{?type,page,per_page}]
+
++ Parameters
+    + type: product (string, required) - 卡片类型
+    + page: 2 (number, required) - 第几页
+    + per_page: 20 (number, required) - 页数
+
++ Response 200 (application/json;charset=utf-8)
     + Attribute
         + data (array[object])
             + object
@@ -21,3 +32,6 @@
                 + content: 我是卡片内容 (string, required) - 卡片内容
                 + link:  (string, required) - 跳转链接
 
+
+
+                
