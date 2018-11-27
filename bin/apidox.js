@@ -30,17 +30,21 @@ program
   .option('-P, --mockPort [mockPort]', 'specify api mock server port')
   .parse(process.argv)
 
+// only run `apidox` command
 if (!process.argv.slice(2).length) {
   program.outputHelp() 
   process.exit(1)
 }
 
 try {
+  // run without -f option
   if (!program.folder) {
-    console.log(chalk.red('Folder option is required. Usage: apidox -f <folder>'))
+    console.log(chalk.red('Not provide api folder. Try: apidox -f <folder>'))
     process.exit(1)
   }
-  bridge.folder = require.resolve(program.folder)
+  bridge.folder = require('path').join(process.cwd(), program.folder)
+  // test dir is accessible
+  require('fs').accessSync(bridge.folder)
 }
 catch (e) {
   console.log(chalk.red(program.folder + ' is not exist.'))
