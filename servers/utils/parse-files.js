@@ -49,6 +49,7 @@ module.exports = (bridge) => {
 
   fse.writeJsonSync(bridge.folder + '/bridge.json', bridge)
 
+  return bridge
 }
 
 

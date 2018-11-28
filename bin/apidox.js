@@ -43,7 +43,7 @@ try {
     process.exit(1)
   }
   bridge.folder = require('path').join(process.cwd(), program.folder)
-  // test dir is accessible
+  // check dir is accessible
   require('fs').accessSync(bridge.folder)
 }
 catch (e) {
