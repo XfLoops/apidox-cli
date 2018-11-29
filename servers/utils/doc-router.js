@@ -9,9 +9,7 @@ module.exports = (bridge) => {
     let options = {
       debug: true,
       self: true,
-      compileDebug: true,
-      basedir: path.join(__dirname, '../views'),
-      filename: 'example.pug'
+      compileDebug: true
     }
     let p = path.join(__dirname, '../views/example.pug')
     let fn = pug.compileFile(p, options)
@@ -19,11 +17,12 @@ module.exports = (bridge) => {
     let html = fn({
       add: (a, b) => a + b,
       title: 'title tst',
-      md: (txt) => markdownit.render(txt)
+      markdown: function (md) {
+        return markdownit.render(md)
+      }
     })
 
     res.send(html)
-
   })
 
   return router

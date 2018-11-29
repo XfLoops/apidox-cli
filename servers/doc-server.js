@@ -5,13 +5,10 @@ const utils = require('./utils')
 const app = express()
 
 module.exports = (bridge) => {
+  bridge = utils.parseDirs(bridge)
   bridge = utils.parseFiles(bridge)
   
   let docRouter = utils.docRouter(bridge)
-  
-  app.locals.minus = function (a ,b) {
-    return a - b
-  }
 
   app.use(docRouter)
   app.set('view engine', 'pug')

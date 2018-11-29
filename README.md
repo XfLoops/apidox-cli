@@ -18,6 +18,9 @@ bridge = {
   mockPort: 4000,
 
   isParsed: false,
+  dirs: {
+    '/public': ['/public/example.apib', '/public/example2.apib']
+  },
   apiContents: {
     '/': 'ddd',
     '/public': 'm1.apib + m2.apib',
