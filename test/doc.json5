@@ -25,26 +25,28 @@
               "name":"semester",
               "description":"学年学期",
               "type":"string",
-              "required":true,
-              "default":"",
+              "required":'required',
+              "enums":false,
               "example":"2017-2018第一学期"
             },
             {
               "name":"periodId",
               "description":"教学周期id",
               "type":"string",
-              "required":true,
-              "default":"",
+              "required":'required',
+               "enums":false,
               "example":"period001"
             }
           ],
           request: {
-            body: "{\n \"success\": true,\n \"mes}"
+            body: {},
+            bodyContent: "{\n \"success\": true,\n \"mes}"
           },
           responses: [
             {
-              status:"200",
-              body: "{\n \"success\": true,\n \"mes}"
+              status: "200",
+              body: {},
+              bodyContent: "{\n \"success\": true,\n \"mes}"
             }
           ]
         }

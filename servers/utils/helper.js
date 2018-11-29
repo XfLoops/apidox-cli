@@ -2,18 +2,21 @@ const slash = require('slash')
 const fs = require('fs')
 const chalk = require('chalk')
 
-// 判断是否是api文件
+// 判断是否是api文件: 
+// *.apib
 const isApi = filepath => {
   return /.*\.apib$/ig.test(filepath)
 }
 
-// 获取文件所在目录
+// 获取文件所在目录:
+// /example; /; /sub/example; 
 const fileDir = (filepath, basepath) => {
   let str = slash(filepath.replace(basepath, ''))
   let segs = str.split('/')
   return '/' + segs.slice(1, segs.length - 1).join('/')
 }
 
+// 替换 <!-- include(data.json5) -->
 const includeReplace = (dir, content) => {
   // handle include directive
   let includePattern = /<!--\s+include\((.*)\)\s+-->/igm

@@ -8,6 +8,8 @@ module.exports = (filedir, bridge) => {
   apiJson = drafter.parseSync(apiContent, {requireBlueprintName: true})
   apiJson = jsonAdaptor(apiJson)
 
+  require('fs-extra').outputJsonSync(bridge.folder + '/apiJson.json', apiJson)
+
   return apiJson
 }
 
