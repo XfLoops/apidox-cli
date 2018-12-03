@@ -1,13 +1,12 @@
+doctype html
 html
   head
     title ddddd
+    style
+      include style.css
   body
-    //- div= self.testVar
-    div= self.add(1, 2)
-    div= self.title
-    //- div= #{minus(1, 2)}
-    div= self.md(`~~~ddtet~~~; **33**`)
-    div= JSON.stringify({"a": 1})
+    div.container
+      div!= self.markdown('http://www.baidu.com ; ~~~<a href="ddd">dddd</a>ddtet~~~; **33** <pre>var a = demo </pre>')
     //- div= location.herf
 
 

@@ -1,7 +1,10 @@
+const parseDirs = require('./parse-dirs')
 const parseContent = require('./parse-content')
 const parseJson = require('./parse-json')
 
 module.exports = (bridge) => {
+  bridge = parseDirs(bridge)
+
   bridge.apiContents = {}
   bridge.apiJson = {}
 

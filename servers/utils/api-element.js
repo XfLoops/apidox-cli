@@ -54,7 +54,7 @@ apiElement.enums = (element) => {
 
 apiElement.parameters = (element) => {
   try {
-    let hrefVariables = element.hrefVariables.content
+    let hrefVariables = element.attributes.hrefVariables.content
     return hrefVariables.map((herf) => {
       let param = {}
 

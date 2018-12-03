@@ -17,7 +17,8 @@ function checkNodeVersion (wanted, id) {
 checkNodeVersion(requiredVersion, 'apidox-cli')
 
 const bridge = {
-  host: require('dev-ip')()[0]
+  // host: require('dev-ip')()[0]
+  host: '127.0.0.1'
 }
 const program = require('commander')
 

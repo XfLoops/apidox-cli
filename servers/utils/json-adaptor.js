@@ -46,17 +46,3 @@ module.exports = (parseResult = {}) => {
   return apiJson
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

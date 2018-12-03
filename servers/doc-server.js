@@ -1,16 +1,14 @@
 const path = require('path')
 const express = require('express')
 const chalk = require('chalk')
-const utils = require('./utils')
+const parseFiles = require('./utils/parse-files')
+const docRouter = require('./utils/doc-router')
 const app = express()
 
 module.exports = (bridge) => {
-  bridge = utils.parseDirs(bridge)
-  bridge = utils.parseFiles(bridge)
+  bridge = parseFiles(bridge)
   
-  let docRouter = utils.docRouter(bridge)
-
-  app.use(docRouter)
+  app.use(docRouter(bridge))
   app.set('view engine', 'pug')
   app.set('views', path.join(__dirname, './views'))
 
