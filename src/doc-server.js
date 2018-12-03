@@ -8,10 +8,11 @@ const app = express()
 module.exports = (bridge) => {
   bridge = parseFiles(bridge)
   
+  app.use('/assets', express.static(path.join(__dirname, '../templates/style')))
   app.use(docRouter(bridge))
+  
   app.set('view engine', 'pug')
   app.set('views', path.join(__dirname, '../templates'))
-  app.use('/assets', express.static(path.join(__dirname, '../templates/style')))
 
   app.listen(bridge.docPort, (err) => {
     if (err) {
