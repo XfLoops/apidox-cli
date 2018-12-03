@@ -38,7 +38,7 @@ mixin Nav()
                       li
                         - var resourceId = resourceGroup.name + '-' + resource.name
                         a(href='#' + resourceId)
-                            span.badge(class= resource.methodLower)= resource.method
+                            span.badge(class= resource.methodLower)
                             != resource.name
    
 
