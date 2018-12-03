@@ -20,10 +20,12 @@ const fileDir = (filepath, basepath) => {
 const includeReplace = (dir, content) => {
   // handle include directive
   let includePattern = /<!--\s+include\((.*)\)\s+-->/igm
+  
   if (includePattern.test(content)) {
     content = content.replace(includePattern, (match, filename) => {
       let seperator = dir.substr(-1) === '/' ? '' : '/'
       let filepath = dir + seperator + filename
+      
       try {
         fs.accessSync(filepath)
       }

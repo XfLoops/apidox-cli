@@ -10,7 +10,7 @@ module.exports = (bridge) => {
   
   app.use(docRouter(bridge))
   app.set('view engine', 'pug')
-  app.set('views', path.join(__dirname, './views'))
+  app.set('views', path.join(__dirname, '../templates'))
 
   app.listen(bridge.docPort, (err) => {
     if (err) {
