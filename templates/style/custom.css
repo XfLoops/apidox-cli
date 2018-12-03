@@ -1,5 +1,16 @@
 
 
+.action h4.action-heading .name {
+  float: none;
+  margin-left: 12px;
+}
+.block-table {
+  width: 100%;
+  text-align: left;
+}
+.block-table th:not(:last-child) {
+  width: 160px;
+}
 
 
 

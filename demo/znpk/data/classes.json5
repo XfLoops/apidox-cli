@@ -1,0 +1,11 @@
+{
+  success: true,
+  message: '处理成功！',
+  data: [
+    {
+      classId: 'classId001',
+      className: '1班',
+      isLocked: true  // 班级是否锁定
+    }
+  ]
+}

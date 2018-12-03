@@ -1,0 +1,59 @@
+{
+	"data": {
+		"allRate": "99.92%",  // 总的规则满足率
+		"fullRateList": [ // 规则满足率100%
+			"教师冲突",
+			"行政班课程冲突",
+			"全局固定点",
+			"老师课时限制",
+			"教师互斥",
+			"教师跨校区",
+			"主科65%在上午",
+			"课程优先区域",
+			"主科老师教案一致",
+			"副科老师教案一致",
+			"上午首节为主科"
+		],
+		"advancedUnfullRateList": ["ICSTeacherAmOrPmClassesMinor"], // 高级规则设置
+		"advancedUnfullRateMap": { // 高级规则满足率
+			"ICSTeacherAmOrPmClassesMinor": "76.47%"
+		},
+		"unfullRateList": [ // 未达到100%规则
+			"ICSTeacherAvgAmFstPmLast",
+			"ICSTeacherAvgAmFstAmLast",
+			"ICSTeacherNoCrossAmPm"
+		],
+		"unfullIdNameMap": { // 未达到100%规则名称
+			"ICSTeacherAmOrPmClassesMinor": "副科老师尽量在一上午/一下午集中上完",
+			"ICSTeacherAvgAmFstPmLast": "不能让老师在上午首节和下午末节连上",
+			"ICSTeacherAvgAmFstAmLast": "不能让老师在上午首节和上午末节连上",
+			"ICSTeacherNoCrossAmPm": "教师不跨上下午授课"
+		},
+		"messageMap": { // 未达到100%规则详情
+			"ICSTeacherAvgAmFstPmLast": [
+				"邓凤教师在周3上午第一节和下午最后一节上课连上！\r\n",
+				"杨照宇教师在周4上午第一节和下午最后一节上课连上！\r\n"
+			],
+			"ICSTeacherAmOrPmClassesMinor": [
+				"高中1年级zdy326班语文教师黄天英在周5跨上下午上课，没有集中上完！\r\n",
+				"高中1年级zdy9班美术教师六社在周1跨上下午上课，没有集中上完！\r\n"
+			],
+			"ICSTeacherAvgAmFstAmLast": [
+				"邓凤教师在周3上午第一节和上午最后一节同时上课！\r\n",
+				"王丹丹教师在周2上午第一节和上午最后一节同时上课！\r\n"
+			],
+			"ICSTeacherNoCrossAmPm": [
+				"高中1年级zdy326班语文教师黄天英在周5跨上下午上课，没有集中上完！\r\n",
+				"高中1年级zdy3班数学教师菲菲在周1跨上下午上课，没有集中上完！\r\n"
+			]
+		},
+		"unfullRateMap": { // 未达到100%规则满足率
+			"ICSTeacherAvgAmFstPmLast": "96.08%",
+			"ICSTeacherAvgAmFstAmLast": "92.16%",
+			"ICSTeacherNoCrossAmPm": "76.47%"
+		}
+	},
+	"error": "0",
+	"message": "查询规则满足率结束！",
+	"success": true
+}

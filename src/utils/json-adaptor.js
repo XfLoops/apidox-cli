@@ -34,6 +34,10 @@ module.exports = (parseResult = {}) => {
           source.request = request
           source.responses = api.responses(httpTransaction)
 
+          // add computed prop
+          source.methodLower = method.toLowerCase()
+          
+
           return source
         }
         return false

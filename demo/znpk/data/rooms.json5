@@ -1,0 +1,12 @@
+{
+  success: true,
+  message: '处理成功！',
+  data: {
+    courseid01: [
+      {
+        roomName: '教室',
+        roomId: 'room001'
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  success: true,
+  message: '处理成功！',
+  data: {
+    '1,2': {
+      type: 'xzb',
+      courseId: 'courseid001',
+      courseName: '物理',
+      teacherId: 'teacherid001',
+      teacherName: '张三',
+      classId: 'classid01',
+      className: '1班',
+      gradeId: 'gradeid001',
+      gradeName: '二年级',
+      campus: '本'
+    },
+    '1,3': {
+      type: 'fcb'
+    },
+    '2,3': {
+      type: 'noclass', // 教师不排课
+      desc: '语文教研'
+    }
+  }
+}

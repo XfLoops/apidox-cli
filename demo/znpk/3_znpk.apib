@@ -1,0 +1,215 @@
+# Group 班级课表
+
+## 获取待安排全部课程 [GET /unarranged.do{?classId}]
+
++ Parameters
+    + classId: class01 (string, required) - 班级id
+
++ Response 200 (application/json;charset=utf-8)
+  <!-- include(data/courses.json5) -->
+
+## 获取某一班级的课表安排 [GET /class_schedule.do{?classId}]
+
+`isSpecialRoom`: `0`:普通， `1`:特殊，`2`：仅单周特殊，`3`：仅双周特殊，`5`：单双周都特殊
+
++ Parameters
+    + classId: class01 (string, required) - 班级id
+
++ Response 200 (application/json;charset=utf-8)
+  <!-- include(data/class_schedule.json5) -->
+
+
+## 拖拽时获取教师已有课表 [GET /teacher_schedule.do{?teacherId}]
+
++ Parameters
+    + teacherId: teacherid001 (string, required) - 教师id,如: `teacherid01,teacherid02`
+
++ Response 200 (application/json;charset=utf-8)
+  <!-- include(data/teacher_schedule.json5) -->
+
+## 拖拽时获取排课点位 [GET /avail.do{?id,lessonFlag,courseId,classType,classId}]
+
+`noclass`: 教师不排课; `unavail`: 不排课点位
+
+注意：如果`classType`为`fcb`，则`id`包含多个id，由逗号连接，形如：`id001,id002,id003`
+
++ Parameters
+    + id: `id001`  (string, required) - id
+    + lessonFlag: `1,2`  (string, required) - 当前节次
+    + courseId: `courseid001`  (string, required) - 课程id
+    + classId: `classid001`  (string, required) - 班级id
+    + classType: `xzb`  (enum, required) - 拖拽的班级类型
+        - Members
+            - xzb
+            - fcb
+
++ Response 200 (application/json;charset=utf-8)
+  <!-- include(data/unavail.json5) -->
+
+## 拖拽后保存课表 [POST /save.do]
+
++ Request
+    + Attributes
+        + id: id001 (string, required) - id
+        + oldFlag: 1,2 (string, required) - 旧的节次
+        + newFlag: 1,2 (string, required) - 新的节次
+        + classType: zxb (string, required) - 班级类型： xzb, fcb
+        + classId: classid001 (string, required) - 班级id
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+## 删除课程 [GET /course/delele.do{?id,lessonFlag}]
+
++ Parameters
+    + id: id001 (string, required) - id
+    + lessonFlag: 1,3 (string, required) - 节次
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+
+## Group 教室安排
+
+## 获取教室列表 [GET /rooms.do{?classId,courseId,lessonFlag,specialCode}]
+
++ Parameters
+    + classId: classid001 (string, required) - 班级id
+    + courseId: classid001 (string, required) - 课程id
+    + lessonFlag: classid001 (string, required) - 节次
+    + specialCode: 1  (number, required) - 特殊教室类型
+
++ Response 200 (application/json;charset=utf-8)
+  <!-- include(data/rooms.json5) -->
+
+
+## 保存教室安排 [POST /room/save.do{?id,roomId,specialCode}]
+
+`specialCode`: `0`:普通， `1`:特殊，`2`：仅单周特殊，`3`：仅双周特殊，`5`：单双周都特殊
+
++ Parameters
+    + id: `id001`  (string, required) - id
+    + roomId: `room001`  (string, required) - 教室id，如: `roomid01,roomid02`
+    + specialCode: 1  (number, required) - 特殊教室类型
+    
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+# Group 顶部操作栏
+
+## 获取冲突信息 [GET /conflict.do]
+
+提供冲突信息展示和生成周课表按钮（忽略冲突，强制生成）。
+
++ Response 200 (application/json;charset=utf-8)
+  <!-- include(data/conflict.json5) -->
+
+## 锁定课程 [POST /courses/lock.do{?isLocked,gradeId,classId}]
+
++ Parameters
+    + gradeId: gradeid001 (string, required) - 年级id
+    + classId: classid001 (string, required) - 班级id
+    + classType: xzb (string, required) - 班级类型
+    + isLocked: true (boolean, required) - 是否锁定
+    + id: courseid0001 (string, required) - 课程id
+    + lessonFlag: 1,2 (string, required) - 节次
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+
+## 生成周课表 [POST /weekly_schedule.do]
+
+需检测冲突信息，无冲突后方可生成周课表。
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+## 清空排课结果 [GET /schedule/clear.do]
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+## 获取规则满足率  [GET /arrangeRate/ruleSatisfaction.do]
+
++ Response 200 (application/json;charset=utf-8)
+    <!-- include(data/rule_fill_rate.json5) -->
+
+
+## Group 重新排课
+
+## 获取排课引擎地址等信息 [GET /engine/info.do]
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+        + data(object)
+            + url: `socket_url` (string, required) - websocket接口地址
+            + id: `userid001` (string, required) - 用户id
+            + time: `1534124236799` (string, required) - 时间戳，使用data.getTime()生成
+            + sign: `MD5_VALUE` (string, required) - 根据schoolId,pkSchoolId,flag,time,version,id生成的md5值
+            + flag: `北京一中【排课管理员】` (string, required) - 格式：学校名称【用户详情】
+            + schoolId: `schoolid001` (string, required) - 学校id
+            + pkSchoolId: `pkschoolid001` (string, required) - 排课学校id
+            + version: `8.2.0` (string, required) - 版本号
+
+
+## 检测排课数据冲突 [POST /arrange/validate.do]
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+
+## 提交排课结果 [POST /arrange/result.do]
+
+将排课结果转发给后台。后台保存排课结果后，前台刷新页面展示。
+
++ Request
+    {}
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+
+# Group 辅助功能
+
+## 下载排课数据和排课结果 [GET /help/download.do{?check,schemeId}]
+
+`check`: true-锁定, false-所有
+
++ Parameters
+    + check: true (Boolean, required) - 是否锁定
+    + schemeId: schemeid001 (string, required) - schemeId
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息
+
+
+## 导入排课结果_手动修改 [POST /help/upload.do{?schemeId}]
+
++ Parameters
+    + schemeId: schemeid001 (string, required) - schemeId
+
++ Response 200 (application/json;charset=utf-8)
+    + Attributes
+        + success: true (boolean, required) - 成功状态
+        + message: 处理成功 (string, required) - 成功消息

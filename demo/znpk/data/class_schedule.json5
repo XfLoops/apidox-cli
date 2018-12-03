@@ -1,0 +1,36 @@
+{
+  success: true,
+  message: '处理成功！',
+  data: {
+    '1,4': {
+      xzb: [
+        {
+          id: 'id001',
+          courseId: 'courseid001',
+          courseName: '物理',
+          teacherId: 'teacherid001',
+          teacherName: '张三',
+          isLocked: false,
+          isSpecialRoom: 0, // 0:普通， 1:特殊，2：仅单周特殊，3：仅双周特殊，5：单双周都特殊
+          roomName: '特殊教室',  // 特殊教室单独安排
+          roomId: 'roomid001'
+        }
+      ],
+      fcb: [
+        {
+          id: 'id001',
+          teacherId: 'teacherid001',
+          teacherName: '张安',
+          courseId: 'courseid01',
+          courseName: '物理',
+          levelId: 'levelid01',
+          levelName: '中考层',
+          classId: 'classid001',
+          className: '分层班1班',
+          isLocked: false
+        }  
+      ],
+      fixed: ['全局固定点']
+    }
+  }
+}

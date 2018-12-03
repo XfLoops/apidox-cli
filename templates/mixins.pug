@@ -23,22 +23,12 @@ mixin Nav()
     //- Draw a navigation bar, which includes links to individual
     //- resources and actions.
     nav
-        if self.api.navItems && self.api.navItems.length
-            .resource-group
-                .heading
-                  .chevron
-                    i.open.fa.fa-angle-down
-                  a(href='#top') Overview
-                .collapse-content
-                  ul: each item in self.api.navItems
-                    li
-                      a(href=item[1])!= item[0]
         each resourceGroup in self.api.resourceGroups || []
             .resource-group
                 .heading
                   .chevron
                     i.open.fa.fa-angle-down
-                  a(href=resourceGroup.elementLink)!= resourceGroup.name || 'Resource Group'
+                  a(href='#' + resourceGroup.name)!= resourceGroup.name || 'Resource Group'
                 .collapse-content
                   ul
                     each item in resourceGroup.navItems || []
@@ -46,56 +36,36 @@ mixin Nav()
                         a(href=item[1])!= item[0]
                     each resource in resourceGroup.resources || []
                       li
-                          if !self.condenseNav || (resource.actions.length != 1)
-                              a(href=resource.elementLink)!= resource.name || 'Resource'
-                              ul: each action in resource.actions || []
-                                  li: a(href=action.elementLink)
-                                    +Badge(action.method)
-                                    != action.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
-                          else
-                              - var action = resource.actions[0]
-                              a(href=action.elementLink)
-                                  +Badge(action.method)
-                                  != action.name || resource.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
-        if (self.apiServer && self.reference)
-            p(style="text-align: center;")
-                a(href=self.apiServer + self.reference.url,target="_blank")=self.reference.text
+                        - var resourceId = resourceGroup.name + '-' + resource.name
+                        a(href='#' + resourceId)
+                            span.badge(class= resource.methodLower)= resource.method
+                            != resource.name
+   
 
 mixin Parameters(params)
     //- Draw a definition list of parameter names, types, defaults,
     //- examples and descriptions.
     .title
-        strong URI Parameters
+        strong Parameters
         .collapse-button.show
             span.close Hide
             span.open Show
     .collapse-content
-        dl.inner: each param in params || []
-            dt= self.urldec(param.name)
-            dd
-                code= param.type || 'string'
-                | &nbsp;
-                if param.required
-                    span.required (required)
-                else
-                    span (optional)
-                | &nbsp;
-                if param.default
-                    span.text-info.default
-                        strong Default:&nbsp;
-                        span= param.default
-                    | &nbsp;
-                if param.example
-                    span.text-muted.example
-                        strong Example:&nbsp;
-                        span= param.example
-                != self.markdown(param.description)
-                if param.values.length
-                    p.choices
-                        strong Choices:&nbsp;
-                        each value in param.values
-                            code= self.urldec(value.value)
-                            = ' '
+        table.block-table
+            thead
+                tr
+                    th 参数名
+                    th 类型
+                    th 是否必填
+                    th 描述
+            tbody
+            each pa in params    
+                tr
+                    td= pa.name
+                    td= pa.type
+                    td= pa.required
+                    td= pa.description
+               
 
 mixin RequestResponse(title, request, collapse)
     .title
@@ -109,6 +79,7 @@ mixin RequestResponse(title, request, collapse)
                 span.close Hide
                 span.open Show
     +RequestResponseBody(request, collapse)
+
 
 mixin RequestResponseBody(request, collapse, showBlank)
     if request.hasContent || showBlank
@@ -129,14 +100,11 @@ mixin RequestResponseBody(request, collapse, showBlank)
                 pre: code
                     != self.highlight(request.body, null, ['json', 'yaml', 'xml', 'javascript'])
                 div(style="height: 1px;")
-            if request.schema
-                h5 Schema
-                pre: code
-                    != self.highlight(request.schema, null, ['json', 'yaml', 'xml'])
-                div(style="height: 1px;")
+
             if !request.hasContent
                 .description.text-muted This response has no content.
                 div(style="height: 1px;")
+
 
 mixin Examples(resourceGroup, resource, action)
     each example in action.examples
@@ -150,50 +118,46 @@ mixin Content()
     header
         h1#top!= self.api.name || 'API Documentation'
 
-    if self.api.descriptionHtml
-        != self.api.descriptionHtml
+    if self.api.description
+        != self.markdown(self.api.description)
 
     //- Loop through and display information about all the resource
     //- groups, resources, and actions.
     each resourceGroup in self.api.resourceGroups || []
-        section.resource-group(id=resourceGroup.elementId)
+        section.resource-group(id=resourceGroup.name)
             h2.group-heading
                 != resourceGroup.name || 'Resource Group'
                 = " "
-                a.permalink(href=resourceGroup.elementLink) &para;
-            if resourceGroup.descriptionHtml
-                != resourceGroup.descriptionHtml
+                a.permalink(href='#' + resourceGroup.name) &para;
+            
+            if resourceGroup.description
+                != self.markdown(self.api.description)
 
             each resource in resourceGroup.resources || []
-                .resource(id=resource.elementId)
-                    h3.resource-heading
-                        != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
-                        = " "
-                        a.permalink(href=resource.elementLink) &nbsp;&para;
-                    if resource.description
-                        != self.markdown(resource.description)
+                - var resourceId = resourceGroup.name + '-' + resource.name
 
-                    each action in resource.actions || []
-                        .action(class=action.methodLower, id=action.elementId)
-                            h4.action-heading
-                                .name!= action.name
-                                a.method(class=action.methodLower, href=action.elementLink)
-                                    = action.method
-                                code.uri= self.urldec(action.uriTemplate)
-                            if action.description
-                                != self.markdown(action.description)
+                .resource(id=resourceId)
 
-                            h4 Example URI
-                            .definition
-                                span.method(class=action.methodLower)= action.method
-                                | &nbsp;
-                                span.uri
-                                  span.hostname= self.api.host
-                                  != action.colorizedUriTemplate
+                    .action(class=resource.methodLower)
+                        h4.action-heading
+                            a.method(class=resource.methodLower)= resource.method
+                            code.uri= resource.uriTemplate
+                            span.name
+                                != resource.name
+                                = " "
+                                a.permalink(href='#' + resourceId) &para;
+                        
+                        if resource.description
+                            != self.markdown(resource.description)
 
-                            //- A list of sub-sections for parameters, requests
-                            //- and responses.
-                            if action.parameters.length
-                                +Parameters(action.parameters)
-                            if action.examples
-                                +Examples(resourceGroup, resource, action)
+                        //- A list of sub-sections for parameters, requests
+                        //- and responses.
+                        if resource.parameters.length
+                            +Parameters(resource.parameters)
+
+                        if resource.responses.length
+                            each response in resource.responses
+                                strong Response
+                                pre: code
+                                    !=response.bodyContent
+
