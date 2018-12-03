@@ -54,12 +54,12 @@ catch (e) {
 
 if (program.docPort || !program.docPort && !program.mockPort) {
   bridge.docPort = program.docPort || 4002
-  require('../servers/doc-server')(bridge)
+  require('../src/doc-server')(bridge)
 }
 
 if (program.mockPort) {
   bridge.mockPort = program.mockPort
-  require('../servers/mock-server')(bridge)
+  require('../src/mock-server')(bridge)
 }
 
 
