@@ -36,5 +36,8 @@
   ],
   "engines": {
     "node": ">=8.9"
+  },
+  "devDependencies": {
+    "less": "^3.9.0"
   }
 }
