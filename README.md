@@ -20,8 +20,15 @@ You can start up both document server and mock server in one command.
 | ---- | ---- | --- | --- |
 | `-f <apiDir>` | `<apiDir>` is folder with api blueprint files (`*.apib`) | :heavy_check_mark: | -- |
 | `-p <docPort>` | `<docPort>` is document server port | -- | `4002` |
-| `-P <mockPort>` | `<mockPort>` is mock server port | -- | `3000` |
+| `-P <mockPort>` | `<mockPort>` is mock server port | -- | -- |
 | `-t <theme>` | `<theme>` can be one of `default`, `cyborg`, `flatly`, `slate`, `streak` | -- | `default` |
+
+## Example
+
+
+- start a document server: `apidox -f ./docs`
+- start a mock server: `apidox -f ./docs -P 3000`
+- change document theme: `apidox -f ./docs -t cyborg`
 
 
 ## License
