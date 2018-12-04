@@ -1,6 +1,6 @@
 # apidox-cli
 
-`apidox-cli` is an api-blueprint-friendly command line interface which can
+apidox-cli is an api-blueprint-friendly tooling which can
 
 - start a **document server** (use `-p` option), serving generated html from api blueprint files (`*.apib`).
 
@@ -10,7 +10,7 @@ You can start up both document server and mock server in one command.
 
 ## Install
 
-  `npm i -g apidox`
+  `npm i -g apidox-cli`
 
 ## Usage
 
@@ -18,10 +18,10 @@ You can start up both document server and mock server in one command.
 
 | options | description | required | default |
 | ---- | ---- | --- | --- |
-| `-f <apiDir>` | folder with api blueprint files (`*.apib`) | :heavy_check_mark: | -- |
-| `-p <docPort>` | document server port | -- | `4002` |
-| `-P <mockPort>` |  mock server port | -- | `3000` |
-| `-t <theme>` | document theme can be one of `default`, `cyborg`, `flatly`, `slate`, `streak` | -- | `default` |
+| `-f <apiDir>` | `<apiDir>` is folder with api blueprint files (`*.apib`) | :heavy_check_mark: | -- |
+| `-p <docPort>` | `<docPort>` is document server port | -- | `4002` |
+| `-P <mockPort>` | `<mockPort>` is mock server port | -- | `3000` |
+| `-t <theme>` | `<theme>` can be one of `default`, `cyborg`, `flatly`, `slate`, `streak` | -- | `default` |
 
 
 ## License
