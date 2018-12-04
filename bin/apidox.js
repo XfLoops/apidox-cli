@@ -67,7 +67,7 @@ if (program.docPort || !program.docPort && !program.mockPort) {
 
 // run mock server
 if (program.mockPort) {
-  bridge.mockPort = program.mockPort
+  bridge.mockPort = program.mockPort || 3000
   
   require('../src/mock-server')(bridge)
 }
