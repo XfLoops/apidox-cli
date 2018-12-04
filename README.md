@@ -4,8 +4,8 @@ Command line interface for api documentation and mock.
 
 ## todos
 
-- 命令行参数解析
-- 解析apib文档输出json
+- [x] 命令行参数解析
+- [x] 解析apib文档输出json
 - apidox init ?
 - mock.js
 

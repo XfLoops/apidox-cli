@@ -10,7 +10,7 @@ module.exports = (bridge) => {
   bridge = parseFiles(bridge)
 
   // favicon
-  app.use(favicon(path.join(__dirname, '../favicon.ico')))
+  app.use(favicon(path.join(__dirname, '../templates/favicon.ico')))
   // static assets
   app.use('/assets', express.static(path.join(__dirname, '../templates/style')))
   // api routes
