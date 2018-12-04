@@ -25,6 +25,7 @@ Command line interface for api documentation and mock.
 - [markdown-it](https://github.com/markdown-it/markdown-it#readme)
 - [highlightjs](https://highlightjs.org/)
 - [Parse Result Namespace](https://api-elements.readthedocs.io/en/latest/element-definitions.html#parse-result-elements)
+- [serve-favicon](https://github.com/expressjs/serve-favicon)
 
 
 # usage

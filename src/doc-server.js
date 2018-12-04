@@ -1,14 +1,19 @@
 const path = require('path')
 const express = require('express')
 const chalk = require('chalk')
+const favicon = require('serve-favicon')
 const parseFiles = require('./utils/parse-files')
 const docRouter = require('./utils/doc-router')
 const app = express()
 
 module.exports = (bridge) => {
   bridge = parseFiles(bridge)
-  
+
+  // favicon
+  app.use(favicon(path.join(__dirname, '../favicon.ico')))
+  // static assets
   app.use('/assets', express.static(path.join(__dirname, '../templates/style')))
+  // api routes
   app.use(docRouter(bridge))
   
   app.set('view engine', 'pug')

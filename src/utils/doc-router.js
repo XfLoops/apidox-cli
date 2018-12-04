@@ -6,11 +6,11 @@ const markdownit = require('markdown-it')({
   typographer: true, // Enable some language-neutral replacement + quotes beautification
   highlight
 })
+const router = express.Router()
 
 module.exports = (bridge) => {
-  const router = express.Router()
   const apiJson = bridge.apiJson
-  const dirs = bridge.dirs
+  const dirs = Object.keys(bridge.dirs)
   const locals = {
     self: true, // if ture, all locals variables are accessed by self.variable.
     debug: false,
@@ -18,11 +18,16 @@ module.exports = (bridge) => {
     highlight
   }
 
+  // logger
+  router.use((req, res, next) => {
+    console.log('%s %s %s', req.method, req.url, req.path);
+    next()
+  })
+
   router.use('/:page', (req, res, next) => {
     let page = req.params.page
-    // [ ]fixme: unmatched route make api return undefined
     let api = apiJson['/' + page] || apiJson['/'] || apiJson[dirs[0]]
-
+    
     res.render('page', { ...locals, api })
   })
 
