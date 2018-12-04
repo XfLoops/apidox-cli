@@ -213,57 +213,6 @@ function init() {
     }
 }
 
-// update notice banner
-// @xfl
-// @date 2017-10-12
-// @update 2018-04-24
-function notifyUpdates (seconds) {
-  var banner = document.querySelector('#notifyBanner')
-
-  if (!banner) {
-    var a = document.createElement('a');
-    var textNode = document.createTextNode('接口文档有更新，点击刷新。[ ' + seconds + '秒后自动刷新 ]')
-    var cssText = 'position: fixed;left:0;right:0;top:0;background:rgba(255, 129, 64, 0.6);color:#666;' +
-      'z-index:99;padding:10px;text-align:center;font-weight:bold;border-bottom: 1px solid #dcdcdc;';
-
-    a.href = '/'
-    a.setAttribute('id', 'notifyBanner');
-    a.style.cssText = cssText
-    a.appendChild(textNode)
-
-    document.body.appendChild(a);
-
-    updateMoment(seconds);
-  }
-}
-
-function updateMoment (seconds) {
-  if (window.bannerTimer) {
-    clearInterval(window.bannerTimer);
-  }
-
-  window.bannerTimer = setInterval(function () {
-    var banner = document.querySelector('#notifyBanner')
-
-    if (--seconds >= 0) {
-      banner.textContent = '接口文档有更新，点击刷新。[ ' + seconds + '秒后自动刷新 ]';
-    } else {
-      removeNotifyBanner()
-      window.location.reload();
-    }
-  }, 1000)
-}
-
-function removeNotifyBanner () {
-  var banner = document.querySelector('#notifyBanner');
-  if (banner) {
-    document.body.removeChild(banner);
-  }
-  if (window.bannerTimer) {
-    clearInterval(window.bannerTimer)
-  }
-}
-
 // Initial call to set up buttons
 init();
 
@@ -271,8 +220,6 @@ window.onload = function () {
     // autoCollapse();
     // Remove the `preload` class to enable animations
     document.querySelector('body').className = '';
-
-    removeNotifyBanner();
 };
 
 

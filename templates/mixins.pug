@@ -19,10 +19,22 @@ mixin Badge(method)
         default
             span.badge: i.fa.fa-dot-circle-o
 
+mixin Menu()
+    div.menu 
+        span 智能排课 API 文档
+        span.menu-icon: i.fa.fa-bars
+        div.menu-items
+            div.menu-item 分层预排
+            div.menu-item 智能排课
+            div.menu-item 自习分班
+
+
 mixin Nav()
+    //- Menu
+    +Menu()
     //- Draw a navigation bar, which includes links to individual
     //- resources and actions.
-    nav
+    nav.nav-fixed
         each resourceGroup in self.api.resourceGroups || []
             .resource-group
                 .heading
