@@ -10,6 +10,7 @@ module.exports = (page, bridge) => {
     self: true, // if ture, all locals variables are accessed by self.variable.
     debug: false,
     theme: bridge.theme, // theme
+    menu: bridge.menu, // 菜单
     markdown,
     highlight,
     api

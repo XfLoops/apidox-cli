@@ -21,17 +21,15 @@ mixin Badge(method)
 
 mixin Menu()
     div.menu 
-        span 智能排课 API 文档
-        span.menu-icon: i.fa.fa-bars
-        div.menu-items
-            div.menu-item 分层预排
-            div.menu-item 智能排课
-            div.menu-item 自习分班
+        span= self.api.name
+        if self.menu.length > 1
+            span.menu-icon: i.fa.fa-bars
+            div.menu-items
+                each item in self.menu
+                    a(href=item.path, class=self.api.name===item.name ? 'active': '').menu-item= item.name
 
 
 mixin Nav()
-    //- Menu
-    +Menu()
     //- Draw a navigation bar, which includes links to individual
     //- resources and actions.
     nav.nav-fixed

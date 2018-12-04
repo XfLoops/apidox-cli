@@ -25,13 +25,23 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.29);
   border-radius: 6px;
   display: none;
+  max-height: 400px;
+  overflow-y: auto;
 }
 .menu:hover .menu-items {
   display: block;
 }
 .menu-item {
+  display: block;
   border-radius: 4px;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: inherit;
+}
+.menu-item.active {
+  color: #337ab7;
 }
 .menu-item:hover {
   background-color: #eee;
