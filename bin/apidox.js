@@ -24,16 +24,17 @@ const program = require('commander')
 
 program
   .version(require('../package').version, '-v, --version')
-  .usage('-f <folder> [-p <docPort> | -P <mockPort>]')
+  .usage('-f <folder> [-p <docPort> | -P <mockPort> | -t <theme>]')
   .description('render and mock api files in one command')
   .option('-f, --folder <folder>', 'specify api files folder')
   .option('-p, --docPort [docPort]', 'specify api document server port')
+  .option('-t, --theme [theme]', 'specify api document theme')
   .option('-P, --mockPort [mockPort]', 'specify api mock server port')
   .parse(process.argv)
 
-// only run `apidox` command
+// run `apidox` command only will display help content
 if (!process.argv.slice(2).length) {
-  program.outputHelp() 
+  program.outputHelp()
   process.exit(1)
 }
 
@@ -52,13 +53,22 @@ catch (e) {
   process.exit(1)
 }
 
-if (program.docPort || !program.docPort && !program.mockPort) {
+// validate theme
+const themes = ['default', 'cyborg', 'flatly', 'slate', 'streak']
+const theme = program.theme || 'default'
+bridge.theme = themes.indexOf(theme) > -1 ? theme : 'default'
+
+// run doc server
+if (program.docPort || !program.docPort && !program.mockPort) {  
   bridge.docPort = program.docPort || 4002
+  
   require('../src/doc-server')(bridge)
 }
 
+// run mock server
 if (program.mockPort) {
   bridge.mockPort = program.mockPort
+  
   require('../src/mock-server')(bridge)
 }
 

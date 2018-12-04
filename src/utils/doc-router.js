@@ -14,6 +14,7 @@ module.exports = (bridge) => {
   const locals = {
     self: true, // if ture, all locals variables are accessed by self.variable.
     debug: false,
+    theme: bridge.theme, // theme
     markdown: md => markdownit.render(md),
     highlight
   }
