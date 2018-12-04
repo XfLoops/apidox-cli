@@ -1,8 +1,8 @@
 # apidox-cli
 
-`apidox-cli` is a tool to generate concise api documentation from api blueprint files (`*.apib`).
+`apidox-cli` provides a document server, serving generated html from api blueprint files (`*.apib`).
 
-`apidox-cli` can also act as a mock server, using data in api blueprint file as response payload.
+`apidox-cli` also provides a mock server, using data in api blueprint file as response payload.
 
 ## usage
 
