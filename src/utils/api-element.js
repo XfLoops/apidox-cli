@@ -1,5 +1,14 @@
 const apiElement = {}
 
+// 找到元素的第一个为type的element
+apiElement.find = (element, type) => {
+  return (element.content || []).find(item => item.element === type)
+}
+// 找到元素的所有的为type的element
+apiElement.filter = (element, type) => {
+  return (element.content || []).filter(item => item.element === type)
+}
+
 apiElement.title = (element) => {
   try {
     return element.meta.title.content
@@ -24,24 +33,11 @@ apiElement.metadata = (element) => {
 
 apiElement.desc = (element) => {
   try {
-    let content = element.content || []
-    let copyElement = content.find(item => item.element === 'copy')
+    let copyElement = apiElement.find(element, 'copy')
     return copyElement ? copyElement.content : ''
   } catch (e) {
     return ''
   }
-}
-
-apiElement.resourceGroups = (element) => {
-  return (element.content || []).filter(item => item.element === 'category')
-}
-
-apiElement.resources = (element) => {
-  return (element.content || []).filter(item => item.element === 'resource')
-}
-
-apiElement.transition = (element) => {
-  return (element.content || []).find(item => item.element === 'transition')
 }
 
 apiElement.enums = (element) => {
@@ -87,49 +83,50 @@ apiElement.uriTemplate = (element) => {
   }
 }
 
-apiElement.dataStructure = (element) => {
-  return (element.content || []).find(item => item.element === 'dataStructure')
-}
-
-apiElement.body = (element) => {
+apiElement.data = (element) => {
   try {
-    return element.content.content.reduce((ret, item) => {
+    return element.content.reduce((ret, item) => {
       let key = item.content.key.content
-      let value = item.content.value.content
-      ret[key] = value
+      let valueType = item.content.value.element
+      let valueContent = item.content.value.content
+
+      if (valueType === 'object') {
+        ret[key] = apiElement.data(valueContent)
+      }
+      else {
+        ret[key] = valueContent
+      }
 
       return ret
     }, {})
   } catch (e) {
-    return {}
+    return null
   }
 }
 
-apiElement.bodyContent = (element, body) => {
-  let content = JSON.stringify(body)
-  try {
-    let assetElement = (element.content || []).find(item => item.element === 'asset' && meta.classes.content[0].content === 'messageBody')
-    return assetElement ? assetElement.content : content
-  } catch (e) {
-    return content
-  } 
-}
-
-apiElement.httpTransaction = (element) => {
-  return (element.content || []).find(item => item.element === 'httpTransaction')
-}
-
 apiElement.request = (element) => {
-  let req = {method: 'GET', request: {}}
+  let req = {
+    method: 'GET', 
+    request: {
+      hasContent: false
+    }
+  }
+
   try {
-    let httpRequest = (element.content || []).find(item => item.element === 'httpRequest')
+    let httpRequest = apiElement.find(element, 'httpRequest')
     
     if (httpRequest) {
-      req.method = httpRequest.attributes.method.content
-      let dataStructure = apiElement.dataStructure(httpRequest)
+      let dataStructure = apiElement.find(httpRequest, 'dataStructure')
       
-      req.request.body = dataStructure ? apiElement.body(dataStructure) : {}
-      req.request.bodyContent = apiElement.bodyContent(httpRequest, req.request.body)
+      req.method = httpRequest.attributes.method.content
+      // [ ] todo: to be improved
+      req.request.data = dataStructure ? apiElement.data(dataStructure.content) : null
+      req.request.body = req.request.data ? JSON.stringify(req.request.data) : null
+      
+      if (req.request.body) {
+        req.request.body = req.request.body.trim()
+        req.request.hasContent = true
+      }
     }
     return req
   } catch (e) {
@@ -137,20 +134,25 @@ apiElement.request = (element) => {
   }
 }
 
-apiElement.responses = (element) => {
-  let res = []
-  try {
-    let httpResponses = (element.content || []).filter(item => item.element === 'httpResponse')
-    return httpResponses.map((response) => {
-      let responseObj = {}
-      let dataStructure = apiElement.dataStructure(response)
+apiElement.response = (element) => {
+  let res = {
+    hasContent: false
+  }
 
-      responseObj.status = response.attributes.statusCode.content
-      responseObj.body = dataStructure ? apiElement.body(dataStructure) : {}
-      responseObj.bodyContent = apiElement.bodyContent(response, responseObj.body)
-      
-      return responseObj
-    })
+  try {
+    let response = apiElement.find(element, 'httpResponse')
+    let dataStructure = apiElement.find(response, 'dataStructure')
+    let asset = apiElement.find(response, 'asset')
+
+    res.status = response.attributes.statusCode.content
+    res.data = dataStructure ? apiElement.data(dataStructure.content) : null
+    res.body = asset ? asset.content : res.data ? JSON.stringify(res.data) : null
+    
+    if (res.body) {
+      res.body = res.body.trim()
+      res.hasContent = true
+    }
+    return res
   } catch (e) {
     return res
   }

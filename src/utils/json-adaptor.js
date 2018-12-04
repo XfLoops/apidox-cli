@@ -10,14 +10,14 @@ module.exports = (parseResult = {}) => {
     apiJson.name = api.title(rootElement)
     apiJson.description = api.desc(rootElement)
     apiJson.metadata = api.metadata(rootElement)
-    apiJson.resourceGroups = api.resourceGroups(rootElement).map((resourceGroup) => {
+    apiJson.resourceGroups = api.filter(rootElement, 'category').map((resourceGroup) => {
       let group = {}
       
       group.element = 'category'
       group.name = api.title(resourceGroup)
       group.description = api.desc(resourceGroup)
-      group.resources = api.resources(resourceGroup).map((resource) => {
-        let transition = api.transition(resource)
+      group.resources = api.filter(resourceGroup, 'resource').map((resource) => {
+        let transition = api.find(resource, 'transition')
         if (transition) {
           let source = {}
 
@@ -27,16 +27,14 @@ module.exports = (parseResult = {}) => {
           source.parameters = api.parameters(transition)
           source.uriTemplate = api.uriTemplate(transition)
 
-          let httpTransaction = api.httpTransaction(transition)
+
+          let httpTransaction = api.find(transition, 'httpTransaction')
           let {method, request} = api.request(httpTransaction)
           
           source.method = method
-          source.request = request
-          source.responses = api.responses(httpTransaction)
-
-          // add computed prop
           source.methodLower = method.toLowerCase()
-          
+          source.request = request
+          source.response = api.response(httpTransaction)
 
           return source
         }

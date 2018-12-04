@@ -51,67 +51,26 @@ mixin Parameters(params)
             span.close Hide
             span.open Show
     .collapse-content
-        table.block-table
-            thead
-                tr
-                    th 参数名
-                    th 类型
-                    th 是否必填
-                    th 描述
-            tbody
-            each pa in params    
-                tr
-                    td= pa.name
-                    td= pa.type
-                    td= pa.required
-                    td= pa.description
-               
-
-mixin RequestResponse(title, request, collapse)
-    .title
-        strong
-            = title
-            if request.name
+        dl.inner.params-inner: each param in params || []
+            dt= param.name
+            dd
+                code= param.type || 'string'
                 | &nbsp;&nbsp;
-                code= request.name
-        if collapse && request.hasContent
-            .collapse-button
-                span.close Hide
-                span.open Show
-    +RequestResponseBody(request, collapse)
+                if param.required
+                    span.required (required)
+                else
+                    span (optional)
+                | &nbsp;&nbsp;
+                span.text-muted.example
+                    != param.description
+                //- 是否是enums类型    
+                if param.enums
+                    p.choices
+                        strong 可枚举值:&nbsp;
+                        each value in param.enums
+                            code= value
+                            = ' '
 
-
-mixin RequestResponseBody(request, collapse, showBlank)
-    if request.hasContent || showBlank
-        div(class=collapse ? 'collapse-content' : ''): .inner
-            if request.description
-                .description!= self.markdown(request.description)
-
-            if Object.keys(request.headers).length
-                h5 Headers
-                pre: code
-                    each item, index in request.headers
-                        != self.highlight(item.name + ': ' + item.value, 'http')
-                        if index < request.headers.length - 1
-                          br
-                div(style="height: 1px;")
-            if request.body
-                h5 Body
-                pre: code
-                    != self.highlight(request.body, null, ['json', 'yaml', 'xml', 'javascript'])
-                div(style="height: 1px;")
-
-            if !request.hasContent
-                .description.text-muted This response has no content.
-                div(style="height: 1px;")
-
-
-mixin Examples(resourceGroup, resource, action)
-    each example in action.examples
-        each request in example.requests
-            +RequestResponse('Request', request, true)
-        each response in example.responses
-            +RequestResponse('Response', response, true)
 
 mixin Content()
     //- Page header and API description
@@ -131,7 +90,7 @@ mixin Content()
                 a.permalink(href='#' + resourceGroup.name) &para;
             
             if resourceGroup.description
-                != self.markdown(self.api.description)
+                != self.markdown(resourceGroup.description)
 
             each resource in resourceGroup.resources || []
                 - var resourceId = resourceGroup.name + '-' + resource.name
@@ -141,23 +100,40 @@ mixin Content()
                     .action(class=resource.methodLower)
                         h4.action-heading
                             a.method(class=resource.methodLower)= resource.method
-                            code.uri= resource.uriTemplate
+                            code.uri
+                                if self.api.metadata.BASE_URI
+                                    b= self.api.metadata.BASE_URI
+                                = resource.uriTemplate
                             span.name
                                 != resource.name
                                 = " "
                                 a.permalink(href='#' + resourceId) &para;
                         
+                        //- description
                         if resource.description
                             != self.markdown(resource.description)
 
-                        //- A list of sub-sections for parameters, requests
-                        //- and responses.
+                        //- parameters
                         if resource.parameters.length
                             +Parameters(resource.parameters)
-
-                        if resource.responses.length
-                            each response in resource.responses
+                        
+                        //- request
+                        if resource.request.hasContent
+                            strong Request
+                            pre: code
+                                != resource.request.body                 
+                        
+                        //- response
+                        if resource.response.hasContent
+                            .title
                                 strong Response
+                                    = "  "
+                                    code= resource.response.status
+                                .collapse-button
+                                    span.close Hide
+                                    span.open Show
+                            .collapse-content      
                                 pre: code
-                                    !=response.bodyContent
+                                    != self.highlight(resource.response.body, null, ['json', 'yaml', 'xml', 'javascript'])
 
+                                

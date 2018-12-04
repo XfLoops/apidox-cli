@@ -1,1 +1,1014 @@
-{"name":"智能排课 API 文档","description":"API 前缀为 `/pk/znpk`","metadata":{"Format":"1A","BaseUri":"/pk/znpk"},"resourceGroups":[{"element":"category","name":"接口约定","description":":::note\n\n- 定义如下基础参数，并在每个请求 (GET, POST, PUT, DELETE) 地址中带上：\n\n  - `schemeId`： 排课方案Id\n  - `gradeId`： 年级Id\n  - `campus`： 校区Id\n:::","resources":[]},{"element":"resource","name":"通用接口","description":"","resources":[{"name":"获取班级列表","description":"","parameters":[],"uriTemplate":"/classes.do","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"获取排课节次","description":"","parameters":[{"name":"classId","description":"班级id","type":"string","required":"required","enums":false,"example":"class01"}],"uriTemplate":"/lesson_times.do{?classId}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理消息","data":[{"element":"member","meta":{"description":{"element":"string","content":"一周几天"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"days"},"value":{"element":"number","content":5}}},{"element":"member","meta":{"description":{"element":"string","content":"一天几节次"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"dayLessons"},"value":{"element":"number","content":10}}}]},"bodyContent":"{\"success\":true,\"message\":\"处理消息\",\"data\":[{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"一周几天\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"days\"},\"value\":{\"element\":\"number\",\"content\":5}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"一天几节次\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"dayLessons\"},\"value\":{\"element\":\"number\",\"content\":10}}}]}"}],"methodLower":"get"}]},{"element":"resource","name":"班级课表","description":"","resources":[{"name":"获取待安排全部课程","description":"","parameters":[{"name":"classId","description":"班级id","type":"string","required":"required","enums":false,"example":"class01"}],"uriTemplate":"/unarranged.do{?classId}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"获取某一班级的课表安排","description":"`isSpecialRoom`: `0`:普通， `1`:特殊，`2`：仅单周特殊，`3`：仅双周特殊，`5`：单双周都特殊","parameters":[{"name":"classId","description":"班级id","type":"string","required":"required","enums":false,"example":"class01"}],"uriTemplate":"/class_schedule.do{?classId}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"拖拽时获取教师已有课表","description":"","parameters":[{"name":"teacherId","description":"教师id,如: `teacherid01,teacherid02`","type":"string","required":"required","enums":false,"example":"teacherid001"}],"uriTemplate":"/teacher_schedule.do{?teacherId}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"拖拽时获取排课点位","description":"`noclass`: 教师不排课; `unavail`: 不排课点位\n\n注意：如果`classType`为`fcb`，则`id`包含多个id，由逗号连接，形如：`id001,id002,id003`","parameters":[{"name":"id","description":"id","type":"string","required":"required","enums":false,"example":"id001"},{"name":"lessonFlag","description":"当前节次","type":"string","required":"required","enums":false,"example":"1,2"},{"name":"courseId","description":"课程id","type":"string","required":"required","enums":false,"example":"courseid001"},{"name":"classId","description":"班级id","type":"string","required":"required","enums":false,"example":"classid001"},{"name":"classType","description":"拖拽的班级类型","type":"enum","required":"required","enums":["xzb","fcb"],"example":"xzb"}],"uriTemplate":"/avail.do{?id,lessonFlag,courseId,classType,classId}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"拖拽后保存课表","description":"","parameters":[],"uriTemplate":"/save.do","method":"POST","request":{"body":{"id":"id001","oldFlag":"1,2","newFlag":"1,2","classType":"zxb","classId":"classid001"},"bodyContent":"{\"id\":\"id001\",\"oldFlag\":\"1,2\",\"newFlag\":\"1,2\",\"classType\":\"zxb\",\"classId\":\"classid001\"}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"},{"name":"删除课程","description":"","parameters":[{"name":"id","description":"id","type":"string","required":"required","enums":false,"example":"id001"},{"name":"lessonFlag","description":"节次","type":"string","required":"required","enums":false,"example":"1,3"}],"uriTemplate":"/course/delele.do{?id,lessonFlag}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"get"}]},{"element":"resource","name":"教室安排","description":"","resources":[{"name":"获取教室列表","description":"","parameters":[{"name":"classId","description":"班级id","type":"string","required":"required","enums":false,"example":"classid001"},{"name":"courseId","description":"课程id","type":"string","required":"required","enums":false,"example":"classid001"},{"name":"lessonFlag","description":"节次","type":"string","required":"required","enums":false,"example":"classid001"},{"name":"specialCode","description":"特殊教室类型","type":"number","required":"required","enums":false,"example":"1"}],"uriTemplate":"/rooms.do{?classId,courseId,lessonFlag,specialCode}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"保存教室安排","description":"`specialCode`: `0`:普通， `1`:特殊，`2`：仅单周特殊，`3`：仅双周特殊，`5`：单双周都特殊","parameters":[{"name":"id","description":"id","type":"string","required":"required","enums":false,"example":"id001"},{"name":"roomId","description":"教室id，如: `roomid01,roomid02`","type":"string","required":"required","enums":false,"example":"room001"},{"name":"specialCode","description":"特殊教室类型","type":"number","required":"required","enums":false,"example":"1"}],"uriTemplate":"/room/save.do{?id,roomId,specialCode}","method":"POST","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"}]},{"element":"resource","name":"顶部操作栏","description":"","resources":[{"name":"获取冲突信息","description":"提供冲突信息展示和生成周课表按钮（忽略冲突，强制生成）。","parameters":[],"uriTemplate":"/conflict.do","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"},{"name":"锁定课程","description":"","parameters":[{"name":"gradeId","description":"年级id","type":"string","required":"required","enums":false,"example":"gradeid001"},{"name":"classId","description":"班级id","type":"string","required":"required","enums":false,"example":"classid001"},{"name":"classType","description":"班级类型","type":"string","required":"required","enums":false,"example":"xzb"},{"name":"isLocked","description":"是否锁定","type":"boolean","required":"required","enums":false,"example":"true"},{"name":"id","description":"课程id","type":"string","required":"required","enums":false,"example":"courseid0001"},{"name":"lessonFlag","description":"节次","type":"string","required":"required","enums":false,"example":"1,2"}],"uriTemplate":"/courses/lock.do{?isLocked,gradeId,classId}","method":"POST","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"},{"name":"生成周课表","description":"需检测冲突信息，无冲突后方可生成周课表。","parameters":[],"uriTemplate":"/weekly_schedule.do","method":"POST","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"},{"name":"清空排课结果","description":"","parameters":[],"uriTemplate":"/schedule/clear.do","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"get"},{"name":"获取规则满足率","description":"","parameters":[],"uriTemplate":"/arrangeRate/ruleSatisfaction.do","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{},"bodyContent":"{}"}],"methodLower":"get"}]},{"element":"resource","name":"重新排课","description":"","resources":[{"name":"获取排课引擎地址等信息","description":"","parameters":[],"uriTemplate":"/engine/info.do","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功","data":[{"element":"member","meta":{"description":{"element":"string","content":"websocket接口地址"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"url"},"value":{"element":"string","content":"socket_url"}}},{"element":"member","meta":{"description":{"element":"string","content":"用户id"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"id"},"value":{"element":"string","content":"userid001"}}},{"element":"member","meta":{"description":{"element":"string","content":"时间戳，使用data.getTime()生成"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"time"},"value":{"element":"string","content":"1534124236799"}}},{"element":"member","meta":{"description":{"element":"string","content":"根据schoolId,pkSchoolId,flag,time,version,id生成的md5值"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"sign"},"value":{"element":"string","content":"MD5_VALUE"}}},{"element":"member","meta":{"description":{"element":"string","content":"格式：学校名称【用户详情】"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"flag"},"value":{"element":"string","content":"北京一中【排课管理员】"}}},{"element":"member","meta":{"description":{"element":"string","content":"学校id"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"schoolId"},"value":{"element":"string","content":"schoolid001"}}},{"element":"member","meta":{"description":{"element":"string","content":"排课学校id"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"pkSchoolId"},"value":{"element":"string","content":"pkschoolid001"}}},{"element":"member","meta":{"description":{"element":"string","content":"版本号"}},"attributes":{"typeAttributes":{"element":"array","content":[{"element":"string","content":"required"}]}},"content":{"key":{"element":"string","content":"version"},"value":{"element":"string","content":"8.2.0"}}}]},"bodyContent":"{\"success\":true,\"message\":\"处理成功\",\"data\":[{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"websocket接口地址\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"url\"},\"value\":{\"element\":\"string\",\"content\":\"socket_url\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"用户id\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"id\"},\"value\":{\"element\":\"string\",\"content\":\"userid001\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"时间戳，使用data.getTime()生成\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"time\"},\"value\":{\"element\":\"string\",\"content\":\"1534124236799\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"根据schoolId,pkSchoolId,flag,time,version,id生成的md5值\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"sign\"},\"value\":{\"element\":\"string\",\"content\":\"MD5_VALUE\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"格式：学校名称【用户详情】\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"flag\"},\"value\":{\"element\":\"string\",\"content\":\"北京一中【排课管理员】\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"学校id\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"schoolId\"},\"value\":{\"element\":\"string\",\"content\":\"schoolid001\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"排课学校id\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"pkSchoolId\"},\"value\":{\"element\":\"string\",\"content\":\"pkschoolid001\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"版本号\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"version\"},\"value\":{\"element\":\"string\",\"content\":\"8.2.0\"}}}]}"}],"methodLower":"get"},{"name":"检测排课数据冲突","description":"","parameters":[],"uriTemplate":"/arrange/validate.do","method":"POST","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"},{"name":"提交排课结果","description":"将排课结果转发给后台。后台保存排课结果后，前台刷新页面展示。","parameters":[],"uriTemplate":"/arrange/result.do","method":"POST","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"}]},{"element":"resource","name":"辅助功能","description":"","resources":[{"name":"下载排课数据和排课结果","description":"`check`: true-锁定, false-所有","parameters":[{"name":"check","description":"是否锁定","type":"Boolean","required":"required","enums":false,"example":"true"},{"name":"schemeId","description":"schemeId","type":"string","required":"required","enums":false,"example":"schemeid001"}],"uriTemplate":"/help/download.do{?check,schemeId}","method":"GET","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"get"},{"name":"导入排课结果_手动修改","description":"","parameters":[{"name":"schemeId","description":"schemeId","type":"string","required":"required","enums":false,"example":"schemeid001"}],"uriTemplate":"/help/upload.do{?schemeId}","method":"POST","request":{"body":{},"bodyContent":"{}"},"responses":[{"status":"200","body":{"success":true,"message":"处理成功"},"bodyContent":"{\"success\":true,\"message\":\"处理成功\"}"}],"methodLower":"post"}]}]}
+{
+  "/znpk": {
+    "name": "智能排课 API 文档",
+    "description": "API 前缀为 `/pk/znpk`",
+    "metadata": {
+      "FORMAT": "1A",
+      "BASE_URI": "/pk/znpk"
+    },
+    "resourceGroups": [
+      {
+        "element": "category",
+        "name": "接口约定",
+        "description": ":::note\n\n- 定义如下基础参数，并在每个请求 (GET, POST, PUT, DELETE) 地址中带上：\n\n  - `schemeId`： 排课方案Id\n  - `gradeId`： 年级Id\n  - `campus`： 校区Id\n:::",
+        "resources": []
+      },
+      {
+        "element": "resource",
+        "name": "通用接口",
+        "description": "",
+        "resources": [
+          {
+            "name": "获取班级列表",
+            "description": "",
+            "parameters": [],
+            "uriTemplate": "/classes.do",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "获取排课节次",
+            "description": "",
+            "parameters": [
+              {
+                "name": "classId",
+                "description": "班级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "class01"
+              }
+            ],
+            "uriTemplate": "/lesson_times.do{?classId}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理消息",
+                  "data": [
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "一周几天"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "days"
+                        },
+                        "value": {
+                          "element": "number",
+                          "content": 5
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "一天几节次"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "dayLessons"
+                        },
+                        "value": {
+                          "element": "number",
+                          "content": 10
+                        }
+                      }
+                    }
+                  ]
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理消息\",\"data\":[{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"一周几天\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"days\"},\"value\":{\"element\":\"number\",\"content\":5}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"一天几节次\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"dayLessons\"},\"value\":{\"element\":\"number\",\"content\":10}}}]}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "element": "resource",
+        "name": "班级课表",
+        "description": "",
+        "resources": [
+          {
+            "name": "获取待安排全部课程",
+            "description": "",
+            "parameters": [
+              {
+                "name": "classId",
+                "description": "班级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "class01"
+              }
+            ],
+            "uriTemplate": "/unarranged.do{?classId}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "获取某一班级的课表安排",
+            "description": "`isSpecialRoom`: `0`:普通， `1`:特殊，`2`：仅单周特殊，`3`：仅双周特殊，`5`：单双周都特殊",
+            "parameters": [
+              {
+                "name": "classId",
+                "description": "班级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "class01"
+              }
+            ],
+            "uriTemplate": "/class_schedule.do{?classId}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "拖拽时获取教师已有课表",
+            "description": "",
+            "parameters": [
+              {
+                "name": "teacherId",
+                "description": "教师id,如: `teacherid01,teacherid02`",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "teacherid001"
+              }
+            ],
+            "uriTemplate": "/teacher_schedule.do{?teacherId}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "拖拽时获取排课点位",
+            "description": "`noclass`: 教师不排课; `unavail`: 不排课点位\n\n注意：如果`classType`为`fcb`，则`id`包含多个id，由逗号连接，形如：`id001,id002,id003`",
+            "parameters": [
+              {
+                "name": "id",
+                "description": "id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "id001"
+              },
+              {
+                "name": "lessonFlag",
+                "description": "当前节次",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "1,2"
+              },
+              {
+                "name": "courseId",
+                "description": "课程id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "courseid001"
+              },
+              {
+                "name": "classId",
+                "description": "班级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "classid001"
+              },
+              {
+                "name": "classType",
+                "description": "拖拽的班级类型",
+                "type": "enum",
+                "required": "required",
+                "enums": [
+                  "xzb",
+                  "fcb"
+                ],
+                "example": "xzb"
+              }
+            ],
+            "uriTemplate": "/avail.do{?id,lessonFlag,courseId,classType,classId}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "拖拽后保存课表",
+            "description": "",
+            "parameters": [],
+            "uriTemplate": "/save.do",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {
+                "id": "id001",
+                "oldFlag": "1,2",
+                "newFlag": "1,2",
+                "classType": "zxb",
+                "classId": "classid001"
+              },
+              "bodyContent": "{\"id\":\"id001\",\"oldFlag\":\"1,2\",\"newFlag\":\"1,2\",\"classType\":\"zxb\",\"classId\":\"classid001\"}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          },
+          {
+            "name": "删除课程",
+            "description": "",
+            "parameters": [
+              {
+                "name": "id",
+                "description": "id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "id001"
+              },
+              {
+                "name": "lessonFlag",
+                "description": "节次",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "1,3"
+              }
+            ],
+            "uriTemplate": "/course/delele.do{?id,lessonFlag}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "element": "resource",
+        "name": "教室安排",
+        "description": "",
+        "resources": [
+          {
+            "name": "获取教室列表",
+            "description": "",
+            "parameters": [
+              {
+                "name": "classId",
+                "description": "班级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "classid001"
+              },
+              {
+                "name": "courseId",
+                "description": "课程id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "classid001"
+              },
+              {
+                "name": "lessonFlag",
+                "description": "节次",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "classid001"
+              },
+              {
+                "name": "specialCode",
+                "description": "特殊教室类型",
+                "type": "number",
+                "required": "required",
+                "enums": false,
+                "example": "1"
+              }
+            ],
+            "uriTemplate": "/rooms.do{?classId,courseId,lessonFlag,specialCode}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "保存教室安排",
+            "description": "`specialCode`: `0`:普通， `1`:特殊，`2`：仅单周特殊，`3`：仅双周特殊，`5`：单双周都特殊",
+            "parameters": [
+              {
+                "name": "id",
+                "description": "id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "id001"
+              },
+              {
+                "name": "roomId",
+                "description": "教室id，如: `roomid01,roomid02`",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "room001"
+              },
+              {
+                "name": "specialCode",
+                "description": "特殊教室类型",
+                "type": "number",
+                "required": "required",
+                "enums": false,
+                "example": "1"
+              }
+            ],
+            "uriTemplate": "/room/save.do{?id,roomId,specialCode}",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "element": "resource",
+        "name": "顶部操作栏",
+        "description": "",
+        "resources": [
+          {
+            "name": "获取冲突信息",
+            "description": "提供冲突信息展示和生成周课表按钮（忽略冲突，强制生成）。",
+            "parameters": [],
+            "uriTemplate": "/conflict.do",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          },
+          {
+            "name": "锁定课程",
+            "description": "",
+            "parameters": [
+              {
+                "name": "gradeId",
+                "description": "年级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "gradeid001"
+              },
+              {
+                "name": "classId",
+                "description": "班级id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "classid001"
+              },
+              {
+                "name": "classType",
+                "description": "班级类型",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "xzb"
+              },
+              {
+                "name": "isLocked",
+                "description": "是否锁定",
+                "type": "boolean",
+                "required": "required",
+                "enums": false,
+                "example": "true"
+              },
+              {
+                "name": "id",
+                "description": "课程id",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "courseid0001"
+              },
+              {
+                "name": "lessonFlag",
+                "description": "节次",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "1,2"
+              }
+            ],
+            "uriTemplate": "/courses/lock.do{?isLocked,gradeId,classId}",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          },
+          {
+            "name": "生成周课表",
+            "description": "需检测冲突信息，无冲突后方可生成周课表。",
+            "parameters": [],
+            "uriTemplate": "/weekly_schedule.do",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          },
+          {
+            "name": "清空排课结果",
+            "description": "",
+            "parameters": [],
+            "uriTemplate": "/schedule/clear.do",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          },
+          {
+            "name": "获取规则满足率",
+            "description": "",
+            "parameters": [],
+            "uriTemplate": "/arrangeRate/ruleSatisfaction.do",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {},
+                "bodyContent": "{}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "element": "resource",
+        "name": "重新排课",
+        "description": "",
+        "resources": [
+          {
+            "name": "获取排课引擎地址等信息",
+            "description": "",
+            "parameters": [],
+            "uriTemplate": "/engine/info.do",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功",
+                  "data": [
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "websocket接口地址"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "url"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "socket_url"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "用户id"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "id"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "userid001"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "时间戳，使用data.getTime()生成"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "time"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "1534124236799"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "根据schoolId,pkSchoolId,flag,time,version,id生成的md5值"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "sign"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "MD5_VALUE"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "格式：学校名称【用户详情】"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "flag"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "北京一中【排课管理员】"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "学校id"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "schoolId"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "schoolid001"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "排课学校id"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "pkSchoolId"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "pkschoolid001"
+                        }
+                      }
+                    },
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": {
+                          "element": "string",
+                          "content": "版本号"
+                        }
+                      },
+                      "attributes": {
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "version"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "8.2.0"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\",\"data\":[{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"websocket接口地址\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"url\"},\"value\":{\"element\":\"string\",\"content\":\"socket_url\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"用户id\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"id\"},\"value\":{\"element\":\"string\",\"content\":\"userid001\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"时间戳，使用data.getTime()生成\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"time\"},\"value\":{\"element\":\"string\",\"content\":\"1534124236799\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"根据schoolId,pkSchoolId,flag,time,version,id生成的md5值\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"sign\"},\"value\":{\"element\":\"string\",\"content\":\"MD5_VALUE\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"格式：学校名称【用户详情】\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"flag\"},\"value\":{\"element\":\"string\",\"content\":\"北京一中【排课管理员】\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"学校id\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"schoolId\"},\"value\":{\"element\":\"string\",\"content\":\"schoolid001\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"排课学校id\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"pkSchoolId\"},\"value\":{\"element\":\"string\",\"content\":\"pkschoolid001\"}}},{\"element\":\"member\",\"meta\":{\"description\":{\"element\":\"string\",\"content\":\"版本号\"}},\"attributes\":{\"typeAttributes\":{\"element\":\"array\",\"content\":[{\"element\":\"string\",\"content\":\"required\"}]}},\"content\":{\"key\":{\"element\":\"string\",\"content\":\"version\"},\"value\":{\"element\":\"string\",\"content\":\"8.2.0\"}}}]}"
+              }
+            ]
+          },
+          {
+            "name": "检测排课数据冲突",
+            "description": "",
+            "parameters": [],
+            "uriTemplate": "/arrange/validate.do",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          },
+          {
+            "name": "提交排课结果",
+            "description": "将排课结果转发给后台。后台保存排课结果后，前台刷新页面展示。",
+            "parameters": [],
+            "uriTemplate": "/arrange/result.do",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "element": "resource",
+        "name": "辅助功能",
+        "description": "",
+        "resources": [
+          {
+            "name": "下载排课数据和排课结果",
+            "description": "`check`: true-锁定, false-所有",
+            "parameters": [
+              {
+                "name": "check",
+                "description": "是否锁定",
+                "type": "Boolean",
+                "required": "required",
+                "enums": false,
+                "example": "true"
+              },
+              {
+                "name": "schemeId",
+                "description": "schemeId",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "schemeid001"
+              }
+            ],
+            "uriTemplate": "/help/download.do{?check,schemeId}",
+            "method": "GET",
+            "methodLower": "get",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": [
+              {
+                "status": "200",
+                "body": {
+                  "success": true,
+                  "message": "处理成功"
+                },
+                "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+              }
+            ]
+          },
+          {
+            "name": "导入排课结果_手动修改",
+            "description": "",
+            "parameters": [
+              {
+                "name": "schemeId",
+                "description": "schemeId",
+                "type": "string",
+                "required": "required",
+                "enums": false,
+                "example": "schemeid001"
+              }
+            ],
+            "uriTemplate": "/help/upload.do{?schemeId}",
+            "method": "POST",
+            "methodLower": "post",
+            "request": {
+              "body": {},
+              "bodyContent": "{}"
+            },
+            "responses": {
+              "status": "200",
+              "body": {
+                "success": true,
+                "message": "处理成功"
+              },
+              "bodyContent": "{\"success\":true,\"message\":\"处理成功\"}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
