@@ -5,7 +5,7 @@ const chalk = require('chalk')
 // 判断是否是api文件: 
 // *.apib
 const isApi = filepath => {
-  return /.*\.apib$/ig.test(filepath)
+  return /.*\.(apib|md)$/ig.test(filepath)
 }
 
 // 获取文件所在目录:

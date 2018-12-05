@@ -111,7 +111,7 @@ mixin Content()
                         h4.action-heading
                             a.method(class=resource.methodLower)= resource.method
                             code.uri
-                                if self.api.metadata.BASE_URI
+                                if self.api.metadata.BASE_URI                                    
                                     b= self.api.metadata.BASE_URI
                                 = resource.uriTemplate
                             span.name

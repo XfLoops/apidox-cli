@@ -10,14 +10,14 @@ module.exports = (bridge) => {
   bridge = parseFiles(bridge)
 
   // favicon
-  app.use(favicon(path.join(__dirname, '../templates/favicon.ico')))
+  app.use(favicon(path.join(__dirname, '../public/favicon.ico')))
   // static assets
-  app.use('/assets', express.static(path.join(__dirname, '../templates/style')))
+  app.use('/assets', express.static(path.join(__dirname, '../public/style')))
   // api routes
   app.use(docRouter(bridge))
   
   app.set('view engine', 'pug')
-  app.set('views', path.join(__dirname, '../templates'))
+  app.set('views', path.join(__dirname, '../public'))
 
   app.listen(bridge.docPort, (err) => {
     if (err) {
