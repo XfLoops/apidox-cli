@@ -24,7 +24,7 @@ module.exports = (bridge) => {
       console.log(chalk.red('Document server is failed to startup. ') + err)
       process.exit(1)
     }
-    console.log(chalk.magenta(`API Document is hosted at [ ${`http://${bridge.host + ':' + bridge.docPort}`} ]`))
+    console.log(chalk.magenta(`API Document is available at [ ${`http://${bridge.host + ':' + bridge.docPort}`} ]`))
   })
 }
 
