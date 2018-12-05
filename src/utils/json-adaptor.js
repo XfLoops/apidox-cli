@@ -29,12 +29,15 @@ module.exports = (parseResult = {}) => {
           source.simpleUri = api.simplify(source.uriTemplate)
 
           let httpTransaction = api.find(transition, 'httpTransaction')
+          // request
           let {method, request} = api.request(httpTransaction)
-          
+          source.request = request
           source.method = method
           source.methodLower = method.toLowerCase()
-          source.request = request
-          source.response = api.response(httpTransaction)
+          // response
+          let {response, schema} = api.response(httpTransaction)
+          source.response = response
+          source.schema = schema
 
           return source
         }

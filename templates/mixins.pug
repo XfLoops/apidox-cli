@@ -145,5 +145,16 @@ mixin Content()
                             .collapse-content      
                                 pre: code
                                     != self.highlight(resource.response.body, null, ['json', 'yaml', 'xml', 'javascript'])
+                        
+                        //- schema
+                        if resource.schema
+                            .title
+                                strong Schema
+                                .collapse-button
+                                    span.close Hide
+                                    span.open Show
+                            .collapse-content      
+                                pre: code
+                                    != self.highlight(resource.schema, null, ['json', 'yaml', 'xml', 'javascript'])
 
-                                
+

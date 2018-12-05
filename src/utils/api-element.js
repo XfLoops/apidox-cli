@@ -4,6 +4,13 @@ const apiElement = {}
 apiElement.find = (element, type) => {
   return (element.content || []).find(item => item.element === type)
 }
+// 找到元素的第一个为type的element, 并从数组中剔除
+apiElement.findOut = (element, type) => {
+  let content = element.content || []
+  let idx = content.findIndex(item => item.element === type)
+  let [elem] = content.splice(idx, 1)
+  return elem
+}
 // 找到元素的所有的为type的element
 apiElement.filter = (element, type) => {
   return (element.content || []).filter(item => item.element === type)
@@ -138,23 +145,33 @@ apiElement.response = (element) => {
   let res = {
     hasContent: false
   }
+  let schema = null
 
   try {
     let response = apiElement.find(element, 'httpResponse')
-    let dataStructure = apiElement.find(response, 'dataStructure')
-    let asset = apiElement.find(response, 'asset')
-
-    res.status = response.attributes.statusCode.content
-    res.data = dataStructure ? apiElement.data(dataStructure.content) : null
-    res.body = asset ? asset.content : res.data ? JSON.stringify(res.data) : null
     
+    // status
+    res.status = response.attributes.statusCode.content
+
+    // data
+    let dataStructure = apiElement.find(response, 'dataStructure')
+    res.data = dataStructure ? apiElement.data(dataStructure.content) : null
+
+    // body
+    let bodyAsset = apiElement.findOut(response, 'asset')
+    res.body = bodyAsset ? bodyAsset.content : res.data ? JSON.stringify(res.data) : null
+    
+    // schema
+    // let schemaAsset = apiElement.findOut(response, 'asset')
+    // schema = schemaAsset ? schemaAsset.content : null
+
     if (res.body) {
       res.body = res.body.trim()
       res.hasContent = true
     }
-    return res
+    return { response: res, schema }
   } catch (e) {
-    return res
+    return { response: res,  schema }
   }
 }
 
