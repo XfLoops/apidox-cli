@@ -1,5 +1,5 @@
 const express = require('express')
-const localVars = require('./locals')
+const localVars = require('./doc-locals')
 
 module.exports = (bridge) => {
   const router = express.Router()

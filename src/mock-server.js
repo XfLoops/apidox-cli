@@ -1,22 +1,23 @@
-const fse = require('fs-extra')
-const express = require('express')
-const cors = require('cors')
 const chalk = require('chalk')
-const chokidar = require('chokidar')
-const drafter = require('drafter')
-const utils = require('./utils')
+const express = require('express')
+const Parser = require('./parser')
+const mockRouter = require('./router/mock')
+const app = express()
 
 module.exports = (bridge) => {
-  // console.log('bridge', bridge)
-  // 判断bridge是否有解析数据，无则重新解析
+  if (!bridge.isParsed) {
+    bridge = Parser(bridge)
+  }
 
-  // 获取mockRouter
+  app.use(mockRouter(bridge))
 
-  // 提供mock服务
-  // const app = express()
-  // app.use(bridge.mockRouter)
-
-
+  app.listen(bridge.mockPort, (err) => {
+    if (err) {
+      console.log(chalk.red('Mock server is failed to startup. ') + err)
+      process.exit(1)
+    }
+    console.log(chalk.magenta(`Mock server is available at [ ${`http://${bridge.host + ':' + bridge.mockPort}`} ]`))
+  })
 }
 
 

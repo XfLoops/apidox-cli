@@ -4,7 +4,7 @@ const apiElement = {}
 apiElement.find = (element, type) => {
   return (element.content || []).find(item => item.element === type)
 }
-// 找到元素的第一个为type的element, 并从数组中剔除
+// 找到元素的第一个为type的element, 并从数组中剔除该element
 apiElement.findOut = (element, type) => {
   let content = element.content || []
   let idx = content.findIndex(item => item.element === type)
@@ -208,6 +208,7 @@ apiElement.response = (element) => {
   }
 }
 
+// 将地址的参数去掉，如: /foo/bar{?p1,p2} => /foo/bar
 apiElement.simplify = (uriTemplate) => {
   let idx = uriTemplate.indexOf('{')
   return idx === -1 ? uriTemplate : uriTemplate.substr(0, idx)
