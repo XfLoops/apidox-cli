@@ -113,7 +113,9 @@ mixin Content()
                             code.uri
                                 if self.api.metadata.BASE_URI                                    
                                     b= self.api.metadata.BASE_URI
-                                = resource.uriTemplate
+                                    = self.api.metadata.BASE_URI === '/' ? resource.uriTemplate.substr(1) : resource.uriTemplate
+                                else
+                                    = resource.uriTemplate
                             span.name
                                 != resource.name
                                 = " "

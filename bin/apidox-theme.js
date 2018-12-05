@@ -6,7 +6,7 @@ const less = require('less')
 const chalk = require('chalk')
 
 const src = f => path.join(__dirname, '../theme', f)
-const dist = f => path.join(__dirname, '../templates/style', f)
+const dist = f => path.join(__dirname, '../public/style', f)
 const readFile = f => fs.readFileSync(src(f), {encoding: 'utf8'})
 const writeFile = (f, c) => fs.writeFileSync(dist(f), c, {encoding: 'utf8'})
 
