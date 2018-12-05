@@ -158,5 +158,10 @@ apiElement.response = (element) => {
   }
 }
 
+apiElement.simplify = (uriTemplate) => {
+  let idx = uriTemplate.indexOf('{')
+  return idx === -1 ? uriTemplate : uriTemplate.substr(0, idx)
+}
+
 module.exports = apiElement
 

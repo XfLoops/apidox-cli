@@ -26,7 +26,7 @@ module.exports = (parseResult = {}) => {
           source.description = api.desc(transition)
           source.parameters = api.parameters(transition)
           source.uriTemplate = api.uriTemplate(transition)
-
+          source.simpleUri = api.simplify(source.uriTemplate)
 
           let httpTransaction = api.find(transition, 'httpTransaction')
           let {method, request} = api.request(httpTransaction)

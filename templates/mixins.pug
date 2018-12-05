@@ -47,7 +47,9 @@ mixin Nav()
                         - var resourceId = resourceGroup.name + '-' + resource.name
                         a(href='#' + resourceId)
                             +Badge(resource.method)
-                            != resource.name
+                            .item-wrapper
+                                != resource.name
+                                code(title= resource.uriTemplate).uri-simple= resource.simpleUri
    
 
 mixin Parameters(params)

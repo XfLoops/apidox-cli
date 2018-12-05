@@ -76,3 +76,24 @@
 .content .collapse-content {
   margin-bottom: 10px;
 }
+
+/* simple uri */
+.item-wrapper {
+  margin-right: 28px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.uri-simple {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 10px;
+  color: #b93d6a;
+}
+

@@ -56,7 +56,7 @@ catch (e) {
 // validate theme
 const themes = ['default', 'cyborg', 'flatly', 'slate', 'streak']
 const theme = program.theme || 'default'
-bridge.theme = themes.indexOf(theme) > -1 ? theme : 'default'
+bridge.theme = themes.indexOf(theme) > -1 ? theme : 'streak'
 
 // run doc server
 if (program.docPort || !program.docPort && !program.mockPort) {  
