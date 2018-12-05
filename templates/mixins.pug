@@ -34,17 +34,15 @@ mixin Nav()
     //- resources and actions.
     nav.nav-fixed
         each resourceGroup in self.api.resourceGroups || []
-            .resource-group
+            - var resources = resourceGroup.resources || []
+            div(class= resources.length ? '' : 'is-empty').resource-group
                 .heading
                   .chevron
                     i.open.fa.fa-angle-down
                   a(href='#' + resourceGroup.name)!= resourceGroup.name || 'Resource Group'
                 .collapse-content
                   ul
-                    each item in resourceGroup.navItems || []
-                      li
-                        a(href=item[1])!= item[0]
-                    each resource in resourceGroup.resources || []
+                    each resource in resources || []
                       li
                         - var resourceId = resourceGroup.name + '-' + resource.name
                         a(href='#' + resourceId)

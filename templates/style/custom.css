@@ -1,3 +1,4 @@
+/* 菜单 */
 .menu {
   text-align: center;
   line-height: 36px;
@@ -60,7 +61,18 @@
 .params-inner {
   line-height: 1.5;
 }
-.collapse-content {
+
+/* 左侧 */
+.resource-group.is-empty .collapse-content {
+  height: 0 !important;
+}
+.resource-group.is-empty .chevron {
+  display: none;
+}
+.resource-group.is-empty .heading a {
+  border-bottom: 0 !important;
+}
+/* 右侧 */
+.content .collapse-content {
   margin-bottom: 10px;
 }
-
