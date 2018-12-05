@@ -15,6 +15,10 @@ apiElement.findOut = (element, type) => {
 apiElement.filter = (element, type) => {
   return (element.content || []).filter(item => item.element === type)
 }
+// 是否是 string, number, boolean
+apiElement.isPrimary = (element) => {
+  return ['string', 'number', 'boolean'].indexOf(element.element) > -1
+}
 
 apiElement.title = (element) => {
   try {
@@ -92,20 +96,44 @@ apiElement.uriTemplate = (element) => {
 
 apiElement.data = (element) => {
   try {
-    return element.content.reduce((ret, item) => {
-      let key = item.content.key.content
-      let valueType = item.content.value.element
-      let valueContent = item.content.value.content
+    if (apiElement.isPrimary(element)) {
+      return element.content
+    }
 
-      if (valueType === 'object') {
-        ret[key] = apiElement.data(valueContent)
+    if (!element.content) {
+      return null
+    }
+
+    let isArray = element.element === 'array'
+
+    return element.content.reduce((ret, item) => {
+      let val = null, key = null
+
+      if (apiElement.isPrimary(item)) {
+        val = item.content
       }
-      else {
-        ret[key] = valueContent
+
+      else if (item.element === 'object' || item.element === 'array') {
+        val = apiElement.data(item)
+      }
+
+      else if (item.element === 'member') {
+        key = item.content.key.content
+        val = apiElement.data(item.content.value)
+      } 
+
+      // 将val加入ret中
+      if (val != null) {
+        if (isArray) {
+          ret.push(val)
+        }
+        else {
+          ret[key] = val
+        }
       }
 
       return ret
-    }, {})
+    }, isArray ? [] : {})
   } catch (e) {
     return null
   }
@@ -128,7 +156,7 @@ apiElement.request = (element) => {
       req.method = httpRequest.attributes.method.content
       // [ ] todo: to be improved
       req.request.data = dataStructure ? apiElement.data(dataStructure.content) : null
-      req.request.body = req.request.data ? JSON.stringify(req.request.data) : null
+      req.request.body = req.request.data ? JSON.stringify(req.request.data, null, 2) : null
       
       if (req.request.body) {
         req.request.body = req.request.body.trim()
@@ -158,15 +186,20 @@ apiElement.response = (element) => {
     res.data = dataStructure ? apiElement.data(dataStructure.content) : null
 
     // body
-    let bodyAsset = apiElement.findOut(response, 'asset')
-    res.body = bodyAsset ? bodyAsset.content : res.data ? JSON.stringify(res.data) : null
+    if (res.data) {
+      res.body = JSON.stringify(res.data, null, 2)
+    }
+    else {
+      let bodyAsset = apiElement.findOut(response, 'asset')
+      res.body = bodyAsset ? bodyAsset.content : null
+    }
+
     
     // schema
     // let schemaAsset = apiElement.findOut(response, 'asset')
     // schema = schemaAsset ? schemaAsset.content : null
 
     if (res.body) {
-      res.body = res.body.trim()
       res.hasContent = true
     }
     return { response: res, schema }
