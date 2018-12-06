@@ -4,7 +4,7 @@ const chalk = require('chalk')
 const semver = require('semver')
 const requiredVersion = require('../package.json').engines.node
 
-function checkNodeVersion (wanted, id) {
+const checkNodeVersion = (wanted, id) => {
   if (!semver.satisfies(process.version, wanted)) {
     console.log(chalk.red(
       'You are using Node ' + process.version + ', but this version of ' + id +
@@ -17,16 +17,14 @@ function checkNodeVersion (wanted, id) {
 checkNodeVersion(requiredVersion, 'apidox-cli')
 
 const bridge = {
-  // host: require('dev-ip')()[0]
   host: '127.0.0.1'
 }
 const program = require('commander')
 
 program
   .version(require('../package').version, '-v, --version')
-  .usage('-f <folder> [-p <docPort> | -P <mockPort> | -t <theme>]')
+  .usage('<folder> [options]')
   .description('render and mock api files in one command')
-  .option('-f, --folder <folder>', 'specify api files folder')
   .option('-p, --docPort [docPort]', 'specify api document server port')
   .option('-t, --theme [theme]', 'specify api document theme')
   .option('-P, --mockPort [mockPort]', 'specify api mock server port')
@@ -39,27 +37,37 @@ if (!process.argv.slice(2).length) {
 }
 
 try {
-  // run without -f option
-  if (!program.folder) {
-    console.log(chalk.red('Not provide api folder. Try: apidox -f <folder>'))
-    process.exit(1)
-  }
-  bridge.folder = require('path').join(process.cwd(), program.folder)
-  // check dir is accessible
+  bridge.folder = require('path').join(process.cwd(), process.argv[2])
+  // check accessible
   require('fs').accessSync(bridge.folder)
 }
 catch (e) {
-  console.log(chalk.red(program.folder + ' is not exist.'))
+  console.log(chalk.red('Folder is invalid or not exist. Try: apidox <folder> [options]'))
   process.exit(1)
 }
 
 // validate theme
+const defaultTheme = 'streak'
 const themes = ['default', 'cyborg', 'flatly', 'slate', 'streak']
-const theme = program.theme || 'default'
-bridge.theme = themes.indexOf(theme) > -1 ? theme : 'streak'
+let theme
+
+if (program.theme != undefined) {
+  if (isNaN(program.theme)) {
+    theme = themes.indexOf(program.theme) > -1 ? program.theme : defaultTheme
+  }
+  else {
+    theme = themes[parseInt(program.theme) % themes.length]
+  }
+}
+else {
+  theme = defaultTheme
+}
+
+bridge.theme = theme
+
 
 // run doc server
-if (program.docPort || !program.docPort && !program.mockPort) {  
+if (program.docPort || !program.docPort && !program.mockPort) {
   bridge.docPort = program.docPort || 4002
   
   require('../src/doc-server')(bridge)
