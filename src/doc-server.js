@@ -1,12 +1,14 @@
 const path = require('path')
 const express = require('express')
-const chalk = require('chalk')
+const ora = require('ora')
 const favicon = require('serve-favicon')
 const Parser = require('./parser')
 const docRouter = require('./router/doc')
 const app = express()
 
 module.exports = (bridge) => {
+  const spinner = ora('Starting doc server....').start()
+
   bridge = Parser(bridge)
 
   // favicon
@@ -21,10 +23,10 @@ module.exports = (bridge) => {
 
   app.listen(bridge.docPort, (err) => {
     if (err) {
-      console.log(chalk.red('Document server is failed to startup. ') + err)
+      spinner.fail('Document server is failed to startup.')
       process.exit(1)
     }
-    console.log(chalk.magenta(`API Document is available at [ ${`http://${bridge.host + ':' + bridge.docPort}`} ]`))
+    spinner.succeed(`API Document is available at [ ${`http://${bridge.host + ':' + bridge.docPort}`} ]`)
   })
 }
 
