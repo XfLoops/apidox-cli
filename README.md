@@ -1,5 +1,9 @@
 # apidox-cli
 
+[![npm](https://img.shields.io/npm/v/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
+[![NpmLicense](https://img.shields.io/npm/l/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
+
+
 `apidox-cli` is an api-blueprint-friendly tooling which can
 
 - start a **document server** (use `-p` option), serving generated html from api blueprint files (`*.apib`).
