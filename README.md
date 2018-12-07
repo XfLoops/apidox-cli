@@ -3,9 +3,9 @@
 [![npm](https://img.shields.io/npm/v/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 [![NpmLicense](https://img.shields.io/npm/l/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 
-![api document](https://user-images.githubusercontent.com/7624050/49628096-2bc31180-fa1d-11e8-9877-11e38e7e7932.png)
+![api document](https://user-images.githubusercontent.com/7624050/49628361-a50f3400-fa1e-11e8-863a-c5d8190494ba.png)
 
-## What it is?
+## What is it?
 
 #### Background
 
