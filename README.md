@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 [![NpmLicense](https://img.shields.io/npm/l/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 
-![api document](./example/screen-shot.png)
+![api document](https://user-images.githubusercontent.com/7624050/49628096-2bc31180-fa1d-11e8-9877-11e38e7e7932.png)
 
 ## What it is?
 
