@@ -9,11 +9,11 @@
   "license": "MIT",
   "keywords": [
     "api",
-    "cli",
-    "blueprint",
-    "documentation",
-    "html",
-    "mock"
+    "api cli",
+    "api tooling",
+    "api blueprint",
+    "api mock",
+    "api document"
   ],
   "files": [
     "bin",
