@@ -9,17 +9,22 @@
   "license": "MIT",
   "keywords": [
     "api",
-    "api cli",
-    "api tooling",
-    "api blueprint",
-    "api mock",
-    "api document"
+    "blueprint",
+    "protagonist",
+    "snowcrash",
+    "html",
+    "parse",
+    "markdown",
+    "mock"
   ],
   "files": [
     "bin",
     "public",
     "src"
   ],
+  "scripts": {
+    "test": "mocha -u exports"
+  },
   "dependencies": {
     "chalk": "^2.4.0",
     "commander": "^2.16.0",
@@ -45,6 +50,8 @@
     "node": ">=8.9"
   },
   "devDependencies": {
-    "less": "^3.9.0"
+    "chai": "^4.2.0",
+    "less": "^3.9.0",
+    "mocha": "^5.2.0"
   }
 }
