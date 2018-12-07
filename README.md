@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 [![NpmLicense](https://img.shields.io/npm/l/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 
+![api document](./example/screen-shot.png)
+
 ## What it is?
 
 #### Background

@@ -110,12 +110,10 @@ mixin Content()
                     .action(class=resource.methodLower)
                         h4.action-heading
                             a.method(class=resource.methodLower)= resource.method
+                            - var baseUri = self.api.metadata.BASE_URI || '/'
                             code.uri
-                                if self.api.metadata.BASE_URI                                    
-                                    b= self.api.metadata.BASE_URI
-                                    = self.api.metadata.BASE_URI === '/' ? resource.uriTemplate.substr(1) : resource.uriTemplate
-                                else
-                                    = resource.uriTemplate
+                                b= baseUri
+                                = baseUri === '/' ? resource.uriTemplate.substr(1) : resource.uriTemplate
                             span.name
                                 != resource.name
                                 = " "
@@ -141,14 +139,16 @@ mixin Content()
                                     != self.highlight(resource.request.body, null, ['json', 'yaml', 'xml', 'javascript'])                 
                         
                         //- response
-                        if resource.response.hasContent
-                            .title
-                                strong Response
-                                    = "  "
-                                    code= resource.response.status
+                        .title
+                            strong Response
+                                = "  "
+                                code= resource.response.status
+                            if resource.response.hasContent
                                 .collapse-button
                                     span.close Hide
                                     span.open Show
+                        
+                        if resource.response.hasContent            
                             .collapse-content      
                                 pre: code
                                     != self.highlight(resource.response.body, null, ['json', 'yaml', 'xml', 'javascript'])

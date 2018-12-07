@@ -210,7 +210,7 @@ apiElement.response = (element) => {
 
 // 将地址的参数去掉，如: /foo/bar{?p1,p2} => /foo/bar
 apiElement.simplify = (uriTemplate) => {
-  let idx = uriTemplate.indexOf('{')
+  let idx = uriTemplate.lastIndexOf('{?')
   return idx === -1 ? uriTemplate : uriTemplate.substr(0, idx)
 }
 
