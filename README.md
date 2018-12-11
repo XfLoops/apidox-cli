@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 [![NpmLicense](https://img.shields.io/npm/l/apidox-cli.svg)](https://www.npmjs.com/package/apidox-cli)
 
-![api document](https://user-images.githubusercontent.com/7624050/49628361-a50f3400-fa1e-11e8-863a-c5d8190494ba.png)
+![theme-demo](https://user-images.githubusercontent.com/7624050/49789248-7d91d180-fd66-11e8-80d0-01fd18d85fa7.gif)
 
 ## What is it?
 
@@ -52,15 +52,15 @@ Eventually, all you have to do is focuing on writing api-blueprint docs, leaving
 | ---- | ---- | --- | --- |
 | `-p <docPort>` | document server port | -- | `4002` |
 | `-P <mockPort>` | mock server port | -- | -- |
-| `-t <theme>` | one of `default`, `cyborg`, `flatly`, `slate`, `streak` or `0-4` | -- | `default` |
+| `-t <theme>` | one of `default`, `cyborg`, `flatly`, `slate`, `streak` or `0-4` | -- | `streak` |
 
 ## Example
 
 
-- start a document server: `apidox ./docs`
-- start a mock server: `apidox ./docs -P 3000`
-- start document server and mock server: `apidox ./docs -p 4002 -P 3000`
-- change document theme: `apidox ./docs -t 2`
+- start a document server: `apidox ./examples`
+- start a mock server: `apidox ./examples -P 3000`
+- start document server and mock server: `apidox ./examples -p 4002 -P 3000`
+- change document theme: `apidox ./examples -t 2`
 
 
 ## License
